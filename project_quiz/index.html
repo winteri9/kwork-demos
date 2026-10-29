@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CeilingLab — натяжные потолки под ключ</title>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    :root {
+        --bg: #060a13;
+        --panel: rgba(17, 25, 42, 0.82);
+        --panel-soft: rgba(255, 255, 255, 0.04);
+        --line: rgba(255, 255, 255, 0.09);
+        --text: #eef4ff;
+        --muted: #8fa2c0;
+        --accent: #3ee6c4;
+        --accent-2: #7b8cff;
+        --danger: #ff7186;
+        --radius: 22px;
+    }
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        min-height: 100vh;
+        overflow-x: hidden;
+        background:
+            radial-gradient(circle at 12% 8%, rgba(62, 230, 196, 0.16), transparent 34%),
+            radial-gradient(circle at 88% 92%, rgba(123, 140, 255, 0.2), transparent 38%),
+            var(--bg);
+        color: var(--text);
+        font-family: "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .glow {
+        position: fixed;
+        z-index: 0;
+        width: 420px;
+        height: 420px;
+        border-radius: 50%;
+        filter: blur(110px);
+        opacity: 0.28;
+        pointer-events: none;
+    }
+
+    .glow--one {
+        top: -140px;
+        left: -120px;
+        background: #1bd7b4;
+    }
+
+    .glow--two {
+        right: -160px;
+        bottom: -180px;
+        background: #5b6cff;
+    }
+
+    .header {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        width: min(1180px, calc(100% - 48px));
+        margin: 0 auto;
+        padding: 28px 0;
+    }
+
+    .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+    }
+
+    .logo__mark {
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: #04101a;
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+    .logo__sub {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .header__contact {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        color: var(--muted);
+        font-size: 14px;
+    }
+
+    .header__phone {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .header__phone:hover {
+        color: var(--accent);
+    }
+
+    .header__note {
+        padding: 7px 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.03);
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .layout {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1.02fr 0.98fr;
+        gap: 64px;
+        align-items: start;
+        width: min(1180px, calc(100% - 48px));
+        margin: 0 auto;
+        padding: 34px 0 64px;
+    }
+
+    .intro {
+        padding-top: 22px;
+    }
+
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 15px;
+        border: 1px solid rgba(62, 230, 196, 0.32);
+        border-radius: 999px;
+        background: rgba(62, 230, 196, 0.08);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .badge::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 12px var(--accent);
+    }
+
+    h1 {
+        margin: 26px 0 20px;
+        font-size: clamp(34px, 4.6vw, 58px);
+        line-height: 1.06;
+        letter-spacing: -0.03em;
+    }
+
+    h1 span {
+        background: linear-gradient(120deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .intro p {
+        max-width: 520px;
+        margin: 0 0 28px;
+        color: var(--muted);
+        font-size: 17px;
+    }
+
+    .features {
+        display: grid;
+        gap: 14px;
+        margin: 0 0 34px;
+        padding: 0;
+        list-style: none;
+    }
+
+    .features li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        color: #c8d6ee;
+        font-size: 15px;
+    }
+
+    .features b {
+        color: var(--text);
+        font-weight: 600;
+    }
+
+    .feature-icon {
+        flex: 0 0 auto;
+        display: grid;
+        place-items: center;
+        width: 26px;
+        height: 26px;
+        margin-top: 1px;
+        border-radius: 8px;
+        background: rgba(62, 230, 196, 0.12);
+        color: var(--accent);
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .stats {
+        display: flex;
+        gap: 34px;
+        padding-top: 26px;
+        border-top: 1px solid var(--line);
+    }
+
+    .stat b {
+        display: block;
+        font-size: 26px;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+    }
+
+    .stat span {
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .quiz-card {
+        position: relative;
+        padding: 30px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: var(--panel);
+        box-shadow: 0 34px 90px rgba(0, 0, 0, 0.48);
+        backdrop-filter: blur(18px);
+    }
+
+    .quiz-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(140deg, rgba(62, 230, 196, 0.5), transparent 38%, rgba(123, 140, 255, 0.4));
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+    }
+
+    .quiz-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 18px;
+    }
+
+    .step-label {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--accent);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .quiz-head h2 {
+        margin: 0;
+        font-size: 23px;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+    }
+
+    .points-pill {
+        flex: 0 0 auto;
+        padding: 8px 13px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--muted);
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .points-pill strong {
+        color: var(--accent);
+        font-size: 14px;
+    }
+
+    .progress {
+        height: 4px;
+        margin-bottom: 24px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.07);
+    }
+
+    .progress span {
+        display: block;
+        width: 25%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        transition: width 0.35s ease;
+    }
+
+    .step {
+        display: none;
+        animation: fade 0.28s ease;
+    }
+
+    .step.is-active {
+        display: block;
+    }
+
+    @keyframes fade {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .options {
+        display: grid;
+        gap: 10px;
+    }
+
+    .options--two {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .option {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 3px;
+        width: 100%;
+        padding: 15px 44px 15px 17px;
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        background: var(--panel-soft);
+        color: var(--text);
+        font-family: inherit;
+        text-align: left;
+        cursor: pointer;
+        transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+
+    .option:hover {
+        border-color: rgba(62, 230, 196, 0.45);
+        background: rgba(62, 230, 196, 0.07);
+        transform: translateY(-1px);
+    }
+
+    .option.is-selected {
+        border-color: var(--accent);
+        background: rgba(62, 230, 196, 0.12);
+        box-shadow: 0 0 0 1px rgba(62, 230, 196, 0.25) inset;
+    }
+
+    .option__title {
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .option__meta {
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .option__check {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        width: 19px;
+        height: 19px;
+        margin-top: -9px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 50%;
+        transition: all 0.2s;
+    }
+
+    .option__check::after {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 6px;
+        width: 5px;
+        height: 9px;
+        border: solid #04110f;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg) scale(0.4);
+        opacity: 0;
+        transition: all 0.2s;
+    }
+
+    .option.is-selected .option__check {
+        border-color: var(--accent);
+        background: var(--accent);
+    }
+
+    .option.is-selected .option__check::after {
+        opacity: 1;
+        transform: rotate(45deg) scale(1);
+    }
+
+    .summary {
+        display: grid;
+        gap: 1px;
+        margin-bottom: 18px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: var(--line);
+    }
+
+    .summary__row {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 10px 15px;
+        background: rgba(12, 19, 33, 0.92);
+        font-size: 13px;
+    }
+
+    .summary__row span {
+        color: var(--muted);
+    }
+
+    .summary__row b {
+        max-width: 60%;
+        font-weight: 600;
+        text-align: right;
+    }
+
+    .price-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 20px;
+        padding: 16px 18px;
+        border: 1px solid rgba(62, 230, 196, 0.3);
+        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(62, 230, 196, 0.12), rgba(123, 140, 255, 0.1));
+    }
+
+    .price-box span {
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .price-box strong {
+        display: block;
+        font-size: 28px;
+        line-height: 1.15;
+        letter-spacing: -0.03em;
+    }
+
+    .price-box em {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        font-style: normal;
+        text-align: right;
+    }
+
+    .fields {
+        display: grid;
+        gap: 12px;
+        margin-bottom: 6px;
+    }
+
+    .field {
+        display: grid;
+        gap: 6px;
+    }
+
+    .field label {
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .field input {
+        width: 100%;
+        padding: 13px 15px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        outline: none;
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text);
+        font-family: inherit;
+        font-size: 15px;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .field input::placeholder {
+        color: #64748b;
+    }
+
+    .field input:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(62, 230, 196, 0.12);
+    }
+
+    .field input.is-error {
+        border-color: var(--danger);
+    }
+
+    .error {
+        min-height: 16px;
+        color: var(--danger);
+        font-size: 11px;
+    }
+
+    .privacy {
+        margin: 6px 0 14px;
+        color: #64748b;
+        font-size: 11px;
+    }
+
+    .quiz-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 20px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 22px;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s, background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .btn:active {
+        transform: scale(0.98);
+    }
+
+    .btn--primary {
+        background: linear-gradient(120deg, var(--accent), #66f0d4);
+        color: #04110f;
+        box-shadow: 0 12px 30px rgba(62, 230, 196, 0.22);
+    }
+
+    .btn--primary:hover {
+        background: linear-gradient(120deg, #5df0d2, var(--accent));
+    }
+
+    .btn--primary:disabled {
+        opacity: 0.55;
+        cursor: wait;
+        box-shadow: none;
+    }
+
+    .btn--ghost {
+        border-color: var(--line);
+        background: transparent;
+        color: var(--muted);
+    }
+
+    .btn--ghost:hover:not(:disabled) {
+        border-color: rgba(255, 255, 255, 0.22);
+        color: var(--text);
+    }
+
+    .btn--ghost:disabled {
+        opacity: 0.35;
+        cursor: default;
+    }
+
+    .hint {
+        color: #64748b;
+        font-size: 11px;
+        text-align: right;
+    }
+
+    .result {
+        display: none;
+        text-align: center;
+        animation: fade 0.35s ease;
+    }
+
+    .result.is-active {
+        display: block;
+    }
+
+    .result__icon {
+        display: grid;
+        place-items: center;
+        width: 58px;
+        height: 58px;
+        margin: 4px auto 16px;
+        border-radius: 50%;
+        background: rgba(62, 230, 196, 0.14);
+        color: var(--accent);
+        font-size: 25px;
+    }
+
+    .result h3 {
+        margin: 0 0 8px;
+        font-size: 23px;
+        letter-spacing: -0.02em;
+    }
+
+    .result p {
+        margin: 0 auto 18px;
+        max-width: 330px;
+        color: var(--muted);
+        font-size: 13px;
+    }
+
+    .result__price {
+        margin-bottom: 18px;
+        font-size: 34px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+    }
+
+    .result__price small {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 0;
+    }
+
+    .footer {
+        position: relative;
+        z-index: 1;
+        width: min(1180px, calc(100% - 48px));
+        margin: 0 auto;
+        padding: 24px 0 34px;
+        border-top: 1px solid var(--line);
+        color: #5f7290;
+        font-size: 12px;
+    }
+
+    @media (max-width: 980px) {
+        .layout {
+            grid-template-columns: 1fr;
+            gap: 36px;
+            padding-top: 10px;
+        }
+
+        .intro {
+            padding-top: 0;
+        }
+
+        .intro p {
+            max-width: none;
+        }
+
+        .quiz-card {
+            max-width: 620px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .header {
+            width: calc(100% - 32px);
+            padding: 20px 0;
+        }
+
+        .header__contact .header__note {
+            display: none;
+        }
+
+        .header__contact {
+            font-size: 13px;
+        }
+
+        .layout {
+            width: calc(100% - 32px);
+            gap: 28px;
+        }
+
+        h1 {
+            margin-top: 18px;
+        }
+
+        .quiz-card {
+            padding: 22px 18px;
+            border-radius: 22px;
+        }
+
+        .quiz-head h2 {
+            font-size: 20px;
+        }
+
+        .points-pill {
+            padding: 6px 10px;
+        }
+
+        .options--two {
+            grid-template-columns: 1fr;
+        }
+
+        .stats {
+            gap: 22px;
+        }
+
+        .stat b {
+            font-size: 22px;
+        }
+
+        .quiz-footer {
+            flex-wrap: wrap;
+        }
+
+        .hint {
+            order: 3;
+            width: 100%;
+            text-align: left;
+        }
+
+        .price-box strong {
+            font-size: 23px;
+        }
+
+        .footer {
+            width: calc(100% - 32px);
+        }
+    }
+</style>
+</head>
+<body>
+<div class="glow glow--one"></div>
+<div class="glow glow--two"></div>
+
+<header class="header">
+    <a class="logo" href="#">
+        <span class="logo__mark">C</span>
+        <span>
+            CeilingLab
+            <span class="logo__sub">натяжные потолки</span>
+        </span>
+    </a>
+    <div class="header__contact">
+        <span class="header__note">Замер бесплатно</span>
+        <a class="header__phone" href="tel:+74951234567">+7 (495) 123-45-67</a>
+    </div>
+</header>
+
+<main class="layout">
+    <section class="intro">
+        <span class="badge">Расчёт за 1 минуту</span>
+        <h1>Идеальный потолок <span>по вашим меркам</span></h1>
+        <p>Ответьте на четыре простых вопроса и получите предварительную стоимость натяжного потолка с монтажом. Без звонков и навязчивых менеджеров.</p>
+        <ul class="features">
+            <li>
+                <span class="feature-icon">1</span>
+                <span><b>Бесплатный замер</b> в удобное время, включая выходные</span>
+            </li>
+            <li>
+                <span class="feature-icon">2</span>
+                <span><b>Монтаж за один день</b> без пыли и грязи, с уборкой после работ</span>
+            </li>
+            <li>
+                <span class="feature-icon">3</span>
+                <span><b>Гарантия 15 лет</b> на полотно и 5 лет на монтажные работы</span>
+            </li>
+        </ul>
+        <div class="stats">
+            <div class="stat">
+                <b>12 000+</b>
+                <span>объектов сдано</span>
+            </div>
+            <div class="stat">
+                <b>4,9 / 5</b>
+                <span>рейтинг клиентов</span>
+            </div>
+            <div class="stat">
+                <b>15 лет</b>
+                <span>гарантия</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="quiz-card" aria-label="Калькулятор стоимости">
+        <div class="quiz-head">
+            <div>
+                <span class="step-label" id="stepLabel">Шаг 1 из 4</span>
+                <h2 id="stepTitle">Какая площадь помещения?</h2>
+            </div>
+            <div class="points-pill">Баллы: <strong id="pointsValue">0</strong></div>
+        </div>
+        <div class="progress"><span id="progressBar"></span></div>
+
+        <div id="steps">
+            <div class="step is-active" data-step="0">
+                <div class="options options--two">
+                    <button type="button" class="option" data-field="area" data-value="12" data-label="до 15 м²" data-points="12">
+                        <span class="option__title">до 15 м²</span>
+                        <span class="option__meta">спальня, детская</span>
+                        <span class="option__check"></span>
+                    </button>
+                    <button type="button" class="option" data-field="area" data-value="20" data-label="15–25 м²" data-points="20">
+                        <span class="option__title">15–25 м²</span>
+                        <span class="option__meta">гостиная, кухня</span>
+                        <span class="option__check"></span>
+                    </button>
+                    <button type="button" class="option" data-field="area" data-value="32" data-label="25–40 м²" data-points="32">
+                        <span class="option__title">25–40 м²</span>
+                        <span class="option__meta">студия, большой зал</span>
+                        <span class="option__check"></span>
+                    </button>
+                    <button type="button" class="option" data-field="area" data-value="50" data-label="более 40 м²" data-points="50">
+                        <span class="option__title">более 40 м²</span>
+                        <span class="option__meta">коммерческое помещение</span>
+                        <span class="option__check"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="step" data-step="1">
+                <div class="options">
+                    <button type="button" class="option" data-field="lights" data-value="0" data-label="без светильников" data-points="0">
+                        <span class="option__title">Без светильников</span>
+                        <span class="option__meta">освещение уже установлено</span>
+                        <span class="option__check"></span>
+                    </button>
+                    <button type="button" class="option" data-field="lights" data-value="3" data-label="4–6 точечных" data-points="3">
+                        <span class="option__title">4–6 точечных светильников</span>
+                        <span class="option__meta">аккуратные точки по периметру</span>
+                        <span class="option__check"></span>
+                    </button>
+                    <button type="button" class="option" data-field="lights" data-value="6" data-label="люстра + 6 точек" data-points="6">
+                        <span class="option__title">Люстра и 6 точечных</span>
+                        <span class="option__meta">классический сценарий освещения</span>
+                        <span class="option__check"></span>
+                    </button>
+                    <button type="button" class="option" data-field="lights" data-value="9" data-label="световые линии" data-points="9">
+                        <span class="option__title">Световые линии</span>
+                        <span class="option__meta">современный дизайнерский свет</span>
+                        <span class="option__check"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="step" data-step="2">
+                <div class="options">
+                    <button type="button" class="option" data-field="urgency" data-value="1" data-label="в течение месяца" data-points="1">
+                        <span class="option__title">Не спешу</span>
+                        <span class="option__meta">в течение месяца</span>
+                        <span class="option__check"></span>
+                    </button>
+                    <button type="button" class="option" data-field="urgency" data-value="1.15" data-label="на этой неделе" data-points="1.15">
+                        <span class="option__title">На этой неделе</span>
+                        <span class="option__meta">приоритетная запись</span>
+                        <span class="option__check"></span>
+                    </button>
+                    <button type="button" class="option" data-field="urgency" data-value="1.3" data-label="срочно, 1–2 дня" data-points="1.3">
+                        <span class="option__title">Срочно, за 1–2 дня</span>
+                        <span class="option__meta">монтаж в ближайшее окно</span>
+                        <span class="option__check"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="step" data-step="3">
+                <div class="summary">
+                    <div class="summary__row"><span>Площадь</span><b id="summaryArea">—</b></div>
+                    <div class="summary__row"><span>Освещение</span><b id="summaryLights">—</b></div>
+                    <div class="summary__row"><span>Сроки</span><b id="summaryUrgency">—</b></div>
+                    <div class="summary__row"><span>Начислено баллов</span><b id="summaryPoints">0</b></div>
+                </div>
+                <div class="price-box">
+                    <div>
+                        <span>Примерная стоимость</span>
+                        <strong id="priceValue">0 ₽</strong>
+                        <em>с монтажом и материалом</em>
+                    </div>
+                    <div><em>ставка 1 000 ₽ / м²</em></div>
+                </div>
+                <form id="leadForm" novalidate>
+                    <div class="fields">
+                        <div class="field">
+                            <label for="nameInput">Ваше имя</label>
+                            <input id="nameInput" name="name" type="text" placeholder="Анна" autocomplete="name" maxlength="60">
+                            <span class="error" id="nameError"></span>
+                        </div>
+                        <div class="field">
+                            <label for="phoneInput">Телефон</label>
+                            <input id="phoneInput" name="phone" type="tel" placeholder="+7 (999) 123-45-67" autocomplete="tel" maxlength="20">
+                            <span class="error" id="phoneError"></span>
+                        </div>
+                    </div>
+                    <p class="privacy">Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных.</p>
+                    <button class="btn btn--primary" id="submitBtn" type="submit" style="width:100%">Получить расчёт</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="result" id="result">
+            <div class="result__icon">✓</div>
+            <h3>Заявка принята</h3>
+            <p id="resultText">Мы свяжемся с вами в течение 15 минут и подтвердим замер.</p>
+            <div class="result__price" id="resultPrice">0 ₽<small>предварительная стоимость</small></div>
+            <button class="btn btn--ghost" id="restartBtn" type="button">Рассчитать заново</button>
+        </div>
+
+        <div class="quiz-footer" id="quizFooter">
+            <button class="btn btn--ghost" id="backBtn" type="button" disabled>Назад</button>
+            <span class="hint">Цена не является публичной офертой</span>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    CeilingLab © 2026. Натяжные потолки под ключ в Москве и области. Стоимость рассчитана по базовой ставке 1 000 ₽ за квадратный метр.
+</footer>
+
+<script>
+    const BASE_RATE = 1000;
+    const TITLES = [
+        "Какая площадь помещения?",
+        "Какое освещение нужно?",
+        "Когда планируете монтаж?",
+        "Куда отправить расчёт?"
+    ];
+
+    const state = {
+        step: 0,
+        area: 0,
+        areaLabel: "",
+        lights: 0,
+        lightsLabel: "",
+        multiplier: 1,
+        urgencyLabel: ""
+    };
+
+    const steps = Array.from(document.querySelectorAll(".step"));
+    const stepLabel = document.getElementById("stepLabel");
+    const stepTitle = document.getElementById("stepTitle");
+    const progressBar = document.getElementById("progressBar");
+    const pointsValue = document.getElementById("pointsValue");
+    const backBtn = document.getElementById("backBtn");
+    const quizFooter = document.getElementById("quizFooter");
+    const result = document.getElementById("result");
+    const form = document.getElementById("leadForm");
+    const nameInput = document.getElementById("nameInput");
+    const phoneInput = document.getElementById("phoneInput");
+    const nameError = document.getElementById("nameError");
+    const phoneError = document.getElementById("phoneError");
+    const submitBtn = document.getElementById("submitBtn");
+    const money = new Intl.NumberFormat("ru-RU");
+
+    function basePoints() {
+        return state.area + state.lights;
+    }
+
+    function totalPoints() {
+        return Math.round(basePoints() * state.multiplier * 10) / 10;
+    }
+
+    function totalPrice() {
+        return Math.round(totalPoints() * BASE_RATE / 100) * 100;
+    }
+
+    function formatMoney(value) {
+        return money.format(value) + " ₽";
+    }
+
+    function refreshSummary() {
+        pointsValue.textContent = totalPoints();
+        document.getElementById("summaryArea").textContent = state.areaLabel || "—";
+        document.getElementById("summaryLights").textContent = state.lightsLabel || "—";
+        document.getElementById("summaryUrgency").textContent = state.urgencyLabel || "—";
+        document.getElementById("summaryPoints").textContent = totalPoints();
+        document.getElementById("priceValue").textContent = formatMoney(totalPrice());
+    }
+
+    function goTo(index) {
+        state.step = Math.max(0, Math.min(steps.length - 1, index));
+        steps.forEach(function (step, position) {
+            step.classList.toggle("is-active", position === state.step);
+        });
+        stepLabel.textContent = "Шаг " + (state.step + 1) + " из " + steps.length;
+        stepTitle.textContent = TITLES[state.step];
+        progressBar.style.width = ((state.step + 1) / steps.length * 100) + "%";
+        backBtn.disabled = state.step === 0;
+        refreshSummary();
+    }
+
+    document.getElementById("steps").addEventListener("click", function (event) {
+        const option = event.target.closest(".option");
+        if (!option) {
+            return;
+        }
+        const field = option.dataset.field;
+        const points = Number(option.dataset.points);
+        const label = option.dataset.label;
+        const siblings = option.parentElement.querySelectorAll(".option");
+        siblings.forEach(function (item) {
+            item.classList.remove("is-selected");
+        });
+        option.classList.add("is-selected");
+
+        if (field === "area") {
+            state.area = points;
+            state.areaLabel = label;
+        }
+        if (field === "lights") {
+            state.lights = points;
+            state.lightsLabel = label;
+        }
+        if (field === "urgency") {
+            state.multiplier = points;
+            state.urgencyLabel = label;
+        }
+
+        refreshSummary();
+        window.setTimeout(function () {
+            if (state.step < 3) {
+                goTo(state.step + 1);
+            }
+        }, 220);
+    });
+
+    backBtn.addEventListener("click", function () {
+        goTo(state.step - 1);
+    });
+
+    nameInput.addEventListener("input", function () {
+        nameInput.classList.remove("is-error");
+        nameError.textContent = "";
+    });
+
+    phoneInput.addEventListener("input", function () {
+        phoneInput.classList.remove("is-error");
+        phoneError.textContent = "";
+    });
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        let valid = true;
+        const name = nameInput.value.trim();
+        const phone = phoneInput.value.trim();
+        const digits = phone.replace(/\D/g, "");
+
+        if (name.length < 2) {
+            nameInput.classList.add("is-error");
+            nameError.textContent = "Укажите имя, минимум 2 символа";
+            valid = false;
+        }
+
+        if (digits.length < 10) {
+            phoneInput.classList.add("is-error");
+            phoneError.textContent = "Введите телефон в формате +7 999 123-45-67";
+            valid = false;
+        }
+
+        if (!valid) {
+            return;
+        }
+
+        const payload = {
+            name: name,
+            phone: phone,
+            area: state.areaLabel,
+            lights: state.lightsLabel,
+            urgency: state.urgencyLabel,
+            points: totalPoints(),
+            price: totalPrice()
+        };
+
+        console.log("Новая заявка:", payload);
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Отправляем...";
+
+        window.setTimeout(function () {
+            document.getElementById("steps").style.display = "none";
+            quizFooter.style.display = "none";
+            document.getElementById("resultText").textContent = name + ", мы свяжемся с вами в течение 15 минут и подтвердим бесплатный замер.";
+            document.getElementById("resultPrice").innerHTML = formatMoney(totalPrice()) + "<small>предварительная стоимость</small>";
+            result.classList.add("is-active");
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Получить расчёт";
+        }, 500);
+    });
+
+    document.getElementById("restartBtn").addEventListener("click", function () {
+        state.area = 0;
+        state.areaLabel = "";
+        state.lights = 0;
+        state.lightsLabel = "";
+        state.multiplier = 1;
+        state.urgencyLabel = "";
+        document.querySelectorAll(".option").forEach(function (option) {
+            option.classList.remove("is-selected");
+        });
+        nameInput.value = "";
+        phoneInput.value = "";
+        document.getElementById("steps").style.display = "";
+        quizFooter.style.display = "";
+        result.classList.remove("is-active");
+        goTo(0);
+    });
+
+    goTo(0);
+</script>
+</body>
+</html>

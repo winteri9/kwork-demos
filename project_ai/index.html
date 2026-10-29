@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Стоматология «Улыбка» — лечение и эстетика</title>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    :root {
+        --ink: #101633;
+        --ink-soft: #46507a;
+        --muted: #7b85a8;
+        --blue: #4356e8;
+        --blue-dark: #2c3ac4;
+        --violet: #8b5cf6;
+        --violet-soft: #ede9fe;
+        --line: #e3e7f8;
+        --surface: #ffffff;
+        --bg: #f5f7ff;
+        --shadow: 0 24px 60px rgba(35, 45, 110, 0.12);
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+        color: inherit;
+    }
+
+    .container {
+        width: min(1160px, calc(100% - 48px));
+        margin: 0 auto;
+    }
+
+    .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        border-bottom: 1px solid rgba(227, 231, 248, 0.8);
+        background: rgba(255, 255, 255, 0.86);
+        backdrop-filter: blur(16px);
+    }
+
+    .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 28px;
+        height: 76px;
+    }
+
+    .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 11px;
+        text-decoration: none;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    .brand__mark {
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, var(--blue), var(--violet));
+        color: #fff;
+        font-size: 19px;
+        box-shadow: 0 10px 24px rgba(67, 86, 232, 0.28);
+    }
+
+    .brand small {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .nav__links {
+        display: flex;
+        gap: 26px;
+        font-size: 14px;
+    }
+
+    .nav__links a {
+        color: var(--ink-soft);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .nav__links a:hover {
+        color: var(--blue);
+    }
+
+    .nav__side {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .nav__phone {
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 13px 24px;
+        border: 1px solid transparent;
+        border-radius: 13px;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+
+    .btn:active {
+        transform: scale(0.98);
+    }
+
+    .btn--primary {
+        background: linear-gradient(120deg, var(--blue), var(--violet));
+        color: #fff;
+        box-shadow: 0 14px 30px rgba(67, 86, 232, 0.28);
+    }
+
+    .btn--primary:hover {
+        box-shadow: 0 18px 38px rgba(67, 86, 232, 0.36);
+    }
+
+    .btn--light {
+        border-color: rgba(255, 255, 255, 0.34);
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+
+    .btn--light:hover {
+        background: rgba(255, 255, 255, 0.18);
+    }
+
+    .hero {
+        position: relative;
+        overflow: hidden;
+        padding: 56px 0 74px;
+        background:
+            radial-gradient(circle at 82% 18%, rgba(139, 92, 246, 0.42), transparent 38%),
+            radial-gradient(circle at 8% 88%, rgba(67, 86, 232, 0.5), transparent 40%),
+            linear-gradient(135deg, #131b4d 0%, #1c2a72 48%, #33218a 100%);
+        color: #fff;
+    }
+
+    .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+        background-size: 56px 56px;
+        mask-image: radial-gradient(circle at 60% 40%, #000, transparent 72%);
+        pointer-events: none;
+    }
+
+    .hero__grid {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1.08fr 0.92fr;
+        gap: 64px;
+        align-items: center;
+    }
+
+    .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 7px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #a78bfa;
+        box-shadow: 0 0 12px #a78bfa;
+    }
+
+    .hero h1 {
+        margin: 22px 0 18px;
+        font-size: clamp(36px, 4.9vw, 60px);
+        line-height: 1.04;
+        letter-spacing: -0.035em;
+    }
+
+    .hero h1 em {
+        color: #c4b5fd;
+        font-style: normal;
+    }
+
+    .hero p {
+        max-width: 500px;
+        margin: 0 0 30px;
+        color: #c3cbf0;
+        font-size: 16px;
+    }
+
+    .hero__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 36px;
+    }
+
+    .hero__facts {
+        display: flex;
+        gap: 36px;
+        padding-top: 26px;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .fact b {
+        display: block;
+        font-size: 25px;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+    }
+
+    .fact span {
+        color: #aeb8e4;
+        font-size: 11px;
+    }
+
+    .hero-card {
+        position: relative;
+        padding: 26px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 26px;
+        background: linear-gradient(160deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
+        box-shadow: 0 34px 80px rgba(7, 10, 40, 0.4);
+        backdrop-filter: blur(14px);
+    }
+
+    .hero-card__top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+
+    .hero-card__label {
+        color: #c7cff5;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .hero-card__status {
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: rgba(74, 222, 128, 0.16);
+        color: #86efac;
+        font-size: 10px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .slot-list {
+        display: grid;
+        gap: 9px;
+        margin-bottom: 20px;
+    }
+
+    .slot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px 15px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 13px;
+        background: rgba(255, 255, 255, 0.07);
+        font-size: 13px;
+    }
+
+    .slot span {
+        color: #bac4ee;
+    }
+
+    .slot b {
+        font-weight: 600;
+    }
+
+    .hero-card__foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+        font-size: 12px;
+        color: #b7c1ec;
+    }
+
+    .hero-card__price {
+        color: #fff;
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+    }
+
+    .hero-card__price small {
+        display: block;
+        color: #a9b4e3;
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0;
+    }
+
+    .section {
+        padding: 76px 0;
+    }
+
+    .section--white {
+        background: var(--surface);
+    }
+
+    .section-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 30px;
+        margin-bottom: 34px;
+    }
+
+    .kicker {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--blue);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .section h2 {
+        margin: 0;
+        font-size: clamp(28px, 3.4vw, 40px);
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+    }
+
+    .section-head p {
+        max-width: 380px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+    }
+
+    .prices {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .price-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: 24px 22px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: var(--surface);
+        transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+
+    .price-card:hover {
+        transform: translateY(-4px);
+        border-color: #c7cffb;
+        box-shadow: var(--shadow);
+    }
+
+    .price-card--accent {
+        border-color: transparent;
+        background: linear-gradient(160deg, var(--blue), var(--violet));
+        color: #fff;
+        box-shadow: 0 22px 50px rgba(67, 86, 232, 0.28);
+    }
+
+    .price-card__tag {
+        align-self: flex-start;
+        margin-bottom: 14px;
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: var(--violet-soft);
+        color: var(--blue);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+    .price-card--accent .price-card__tag {
+        background: rgba(255, 255, 255, 0.18);
+        color: #fff;
+    }
+
+    .price-card h3 {
+        margin: 0 0 7px;
+        font-size: 17px;
+        line-height: 1.25;
+    }
+
+    .price-card p {
+        margin: 0 0 20px;
+        min-height: 54px;
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .price-card--accent p {
+        color: #d4daf9;
+    }
+
+    .price {
+        margin-top: auto;
+        font-size: 25px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+    }
+
+    .price small {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0;
+    }
+
+    .price-card--accent .price small {
+        color: #cdd4f8;
+    }
+
+    .about {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 60px;
+        align-items: center;
+    }
+
+    .about__visual {
+        position: relative;
+        min-height: 330px;
+        border-radius: 28px;
+        background:
+            radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.5), transparent 42%),
+            linear-gradient(140deg, #dfe5ff, #efe9ff 55%, #dbe4ff);
+        overflow: hidden;
+    }
+
+    .ring {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid rgba(67, 86, 232, 0.22);
+    }
+
+    .ring--one {
+        top: -60px;
+        right: -40px;
+        width: 240px;
+        height: 240px;
+    }
+
+    .ring--two {
+        bottom: -80px;
+        left: -50px;
+        width: 280px;
+        height: 280px;
+        border-color: rgba(139, 92, 246, 0.26);
+    }
+
+    .about__badge {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 190px;
+        height: 190px;
+        margin: -95px 0 0 -95px;
+        border-radius: 50%;
+        background: linear-gradient(140deg, #fff, #eef1ff);
+        box-shadow: 0 26px 60px rgba(50, 62, 140, 0.22);
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .about__badge b {
+        display: block;
+        font-size: 44px;
+        line-height: 1;
+        letter-spacing: -0.05em;
+        background: linear-gradient(120deg, var(--blue), var(--violet));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .about__badge span {
+        display: block;
+        margin-top: 6px;
+        color: var(--ink-soft);
+        font-size: 11px;
+        line-height: 1.4;
+    }
+
+    .about__float {
+        position: absolute;
+        right: 20px;
+        bottom: 22px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 12px 30px rgba(50, 62, 140, 0.16);
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--ink);
+    }
+
+    .about__float span {
+        display: block;
+        color: var(--muted);
+        font-size: 9px;
+        font-weight: 500;
+    }
+
+    .about h2 {
+        margin-bottom: 18px;
+    }
+
+    .about p {
+        margin: 0 0 24px;
+        color: var(--ink-soft);
+        font-size: 15px;
+    }
+
+    .checks {
+        display: grid;
+        gap: 14px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .checks li {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        color: var(--ink-soft);
+        font-size: 14px;
+    }
+
+    .check {
+        flex: 0 0 auto;
+        display: grid;
+        place-items: center;
+        width: 24px;
+        height: 24px;
+        margin-top: 1px;
+        border-radius: 8px;
+        background: var(--violet-soft);
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .cta {
+        position: relative;
+        overflow: hidden;
+        padding: 44px;
+        border-radius: 28px;
+        background: linear-gradient(120deg, #1a2360, #3a2492);
+        color: #fff;
+    }
+
+    .cta::before {
+        content: "";
+        position: absolute;
+        top: -120px;
+        right: -80px;
+        width: 340px;
+        height: 340px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(139, 92, 246, 0.55), transparent 65%);
+    }
+
+    .cta__inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 30px;
+    }
+
+    .cta h2 {
+        margin: 0 0 8px;
+        font-size: clamp(26px, 3vw, 36px);
+        letter-spacing: -0.03em;
+    }
+
+    .cta p {
+        margin: 0;
+        color: #c6cdf0;
+        font-size: 14px;
+    }
+
+    .footer {
+        padding: 34px 0;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .footer__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .chat-button {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 60;
+        display: grid;
+        place-items: center;
+        width: 62px;
+        height: 62px;
+        border: 0;
+        border-radius: 50%;
+        background: linear-gradient(140deg, var(--blue), var(--violet));
+        color: #fff;
+        cursor: pointer;
+        box-shadow: 0 16px 40px rgba(67, 86, 232, 0.42);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .chat-button:hover {
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 20px 46px rgba(67, 86, 232, 0.5);
+    }
+
+    .chat-button::before {
+        content: "";
+        position: absolute;
+        inset: -5px;
+        border-radius: 50%;
+        border: 1px solid rgba(139, 92, 246, 0.5);
+        animation: pulse 2.4s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(0.94);
+            opacity: 0.8;
+        }
+        70% {
+            transform: scale(1.16);
+            opacity: 0;
+        }
+        100% {
+            transform: scale(1.16);
+            opacity: 0;
+        }
+    }
+
+    .chat-button svg {
+        width: 26px;
+        height: 26px;
+    }
+
+    .chat-button__badge {
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        display: grid;
+        place-items: center;
+        min-width: 20px;
+        height: 20px;
+        padding: 0 5px;
+        border: 2px solid var(--bg);
+        border-radius: 999px;
+        background: #f43f5e;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 800;
+    }
+
+    .chat {
+        position: fixed;
+        right: 24px;
+        bottom: 98px;
+        z-index: 70;
+        display: flex;
+        flex-direction: column;
+        width: 360px;
+        max-width: calc(100vw - 32px);
+        height: 520px;
+        max-height: calc(100vh - 130px);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: var(--surface);
+        box-shadow: 0 34px 90px rgba(20, 28, 80, 0.3);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(16px) scale(0.97);
+        transform-origin: bottom right;
+        transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
+    }
+
+    .chat.is-open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1);
+    }
+
+    .chat__head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 17px 18px;
+        background: linear-gradient(135deg, var(--blue-dark), var(--violet));
+        color: #fff;
+    }
+
+    .chat__avatar {
+        position: relative;
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        width: 40px;
+        height: 40px;
+        border-radius: 13px;
+        background: rgba(255, 255, 255, 0.2);
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+    .chat__avatar::after {
+        content: "";
+        position: absolute;
+        right: -1px;
+        bottom: -1px;
+        width: 10px;
+        height: 10px;
+        border: 2px solid #4b3bb8;
+        border-radius: 50%;
+        background: #4ade80;
+    }
+
+    .chat__who b {
+        display: block;
+        font-size: 14px;
+        line-height: 1.3;
+    }
+
+    .chat__who span {
+        color: #d5d9f8;
+        font-size: 11px;
+    }
+
+    .chat__close {
+        display: grid;
+        place-items: center;
+        width: 30px;
+        height: 30px;
+        margin-left: auto;
+        border: 0;
+        border-radius: 9px;
+        background: rgba(255, 255, 255, 0.14);
+        color: #fff;
+        font-size: 17px;
+        line-height: 1;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .chat__close:hover {
+        background: rgba(255, 255, 255, 0.26);
+    }
+
+    .chat__messages {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 18px 16px;
+        overflow-y: auto;
+        background: linear-gradient(180deg, #fafbff, #f3f5ff);
+        scrollbar-width: thin;
+    }
+
+    .message {
+        display: flex;
+        gap: 8px;
+        max-width: 88%;
+        animation: messageIn 0.25s ease;
+    }
+
+    .message--bot {
+        align-self: flex-start;
+    }
+
+    .message--user {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+    }
+
+    @keyframes messageIn {
+        from {
+            opacity: 0;
+            transform: translateY(6px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .message__avatar {
+        flex: 0 0 auto;
+        display: grid;
+        place-items: center;
+        width: 26px;
+        height: 26px;
+        margin-top: 2px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, var(--blue), var(--violet));
+        color: #fff;
+        font-size: 11px;
+        font-weight: 800;
+    }
+
+    .message__bubble {
+        padding: 10px 13px;
+        border-radius: 14px;
+        font-size: 13px;
+        line-height: 1.45;
+        box-shadow: 0 4px 14px rgba(40, 50, 110, 0.06);
+    }
+
+    .message--bot .message__bubble {
+        border-bottom-left-radius: 4px;
+        background: #fff;
+        color: var(--ink);
+    }
+
+    .message--user .message__bubble {
+        border-bottom-right-radius: 4px;
+        background: linear-gradient(120deg, var(--blue), var(--violet));
+        color: #fff;
+    }
+
+    .typing {
+        display: inline-flex;
+        gap: 4px;
+        padding: 4px 2px;
+    }
+
+    .typing span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #a5afd6;
+        animation: blink 1.2s infinite;
+    }
+
+    .typing span:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .typing span:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+
+    @keyframes blink {
+        0%,
+        60%,
+        100% {
+            opacity: 0.35;
+            transform: translateY(0);
+        }
+        30% {
+            opacity: 1;
+            transform: translateY(-3px);
+        }
+    }
+
+    .chat__quick {
+        display: flex;
+        gap: 7px;
+        padding: 10px 14px 0;
+        overflow-x: auto;
+        background: #fafbff;
+        scrollbar-width: none;
+    }
+
+    .chat__quick::-webkit-scrollbar {
+        display: none;
+    }
+
+    .quick {
+        flex: 0 0 auto;
+        padding: 8px 12px;
+        border: 1px solid #d7ddfb;
+        border-radius: 999px;
+        background: #fff;
+        color: var(--blue);
+        font-family: inherit;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, border-color 0.2s;
+    }
+
+    .quick:hover {
+        border-color: var(--violet);
+        background: var(--violet-soft);
+    }
+
+    .chat__form {
+        display: flex;
+        gap: 8px;
+        padding: 12px 14px 14px;
+        background: #fafbff;
+        border-top: 1px solid #edf0fc;
+    }
+
+    .chat__input {
+        flex: 1;
+        min-width: 0;
+        padding: 12px 14px;
+        border: 1px solid #dfe4f7;
+        border-radius: 12px;
+        outline: none;
+        background: #fff;
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 13px;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .chat__input::placeholder {
+        color: #9aa3c4;
+    }
+
+    .chat__input:focus {
+        border-color: var(--violet);
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.13);
+    }
+
+    .chat__send {
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        width: 42px;
+        height: 42px;
+        border: 0;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--blue), var(--violet));
+        color: #fff;
+        cursor: pointer;
+        transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .chat__send:hover {
+        transform: translateY(-1px);
+    }
+
+    .chat__send svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    .chat__note {
+        padding: 0 14px 12px;
+        background: #fafbff;
+        color: #9aa3c4;
+        font-size: 9px;
+        text-align: center;
+    }
+
+    @media (max-width: 1000px) {
+        .hero__grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .hero-card {
+            max-width: 480px;
+        }
+
+        .prices {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .about {
+            grid-template-columns: 1fr;
+            gap: 34px;
+        }
+
+        .nav__links {
+            display: none;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .container {
+            width: calc(100% - 32px);
+        }
+
+        .nav {
+            height: 66px;
+        }
+
+        .nav__phone {
+            display: none;
+        }
+
+        .nav__side .btn {
+            padding: 10px 14px;
+            font-size: 12px;
+        }
+
+        .hero {
+            padding: 36px 0 52px;
+        }
+
+        .hero__facts {
+            gap: 22px;
+        }
+
+        .section {
+            padding: 52px 0;
+        }
+
+        .section-head {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .prices {
+            grid-template-columns: 1fr;
+        }
+
+        .cta {
+            padding: 28px 22px;
+        }
+
+        .cta__inner {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .chat {
+            right: 16px;
+            bottom: 92px;
+            height: 500px;
+        }
+
+        .chat-button {
+            right: 16px;
+            bottom: 18px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+    <div class="container nav">
+        <a class="brand" href="#top">
+            <span class="brand__mark">У</span>
+            <span>
+                Улыбка
+                <small>стоматология</small>
+            </span>
+        </a>
+        <nav class="nav__links">
+            <a href="#prices">Цены</a>
+            <a href="#about">О клинике</a>
+            <a href="#contacts">Контакты</a>
+        </nav>
+        <div class="nav__side">
+            <a class="nav__phone" href="tel:+74952223344">+7 (495) 222-33-44</a>
+            <a class="btn btn--primary" href="#prices">Записаться</a>
+        </div>
+    </div>
+</header>
+
+<main id="top">
+    <section class="hero">
+        <div class="container hero__grid">
+            <div>
+                <span class="eyebrow">Клиника в центре Москвы</span>
+                <h1>Здоровая улыбка <em>без страха и боли</em></h1>
+                <p>Лечим бережно, объясняем понятно и показываем результат до начала работы. Первый приём и диагностика — бесплатно.</p>
+                <div class="hero__actions">
+                    <a class="btn btn--primary" href="#prices">Выбрать услугу</a>
+                    <button class="btn btn--light" id="heroChat" type="button">Задать вопрос</button>
+                </div>
+                <div class="hero__facts">
+                    <div class="fact">
+                        <b>18 лет</b>
+                        <span>работаем с 2008 года</span>
+                    </div>
+                    <div class="fact">
+                        <b>24 000+</b>
+                        <span>пациентов клиники</span>
+                    </div>
+                    <div class="fact">
+                        <b>4,9</b>
+                        <span>средняя оценка</span>
+                    </div>
+                </div>
+            </div>
+            <aside class="hero-card">
+                <div class="hero-card__top">
+                    <span class="hero-card__label">Ближайшие окна</span>
+                    <span class="hero-card__status">Есть запись</span>
+                </div>
+                <div class="slot-list">
+                    <div class="slot"><b>Сегодня</b><span>15:30 · 18:00</span></div>
+                    <div class="slot"><b>Завтра</b><span>10:00 · 12:30 · 17:00</span></div>
+                    <div class="slot"><b>Суббота</b><span>11:00 · 14:00</span></div>
+                </div>
+                <div class="hero-card__foot">
+                    <span>Первичная консультация</span>
+                    <span class="hero-card__price">0 ₽<small>диагностика и план лечения</small></span>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <section class="section section--white" id="prices">
+        <div class="container">
+            <div class="section-head">
+                <div>
+                    <span class="kicker">Прозрачные цены</span>
+                    <h2>Популярные услуги</h2>
+                </div>
+                <p>Итоговую стоимость фиксируем в плане лечения до начала работ. Никаких доплат по ходу.</p>
+            </div>
+            <div class="prices">
+                <article class="price-card">
+                    <span class="price-card__tag">Гигиена</span>
+                    <h3>Профессиональная чистка</h3>
+                    <p>Ультразвук, Air Flow и полировка. Возвращаем естественный цвет эмали.</p>
+                    <div class="price">4 500 ₽<small>за один визит</small></div>
+                </article>
+                <article class="price-card price-card--accent">
+                    <span class="price-card__tag">Хит</span>
+                    <h3>Лечение кариеса</h3>
+                    <p>Реставрация под цвет зуба с гарантией на пломбу 3 года.</p>
+                    <div class="price">6 500 ₽<small>за один зуб</small></div>
+                </article>
+                <article class="price-card">
+                    <span class="price-card__tag">Эстетика</span>
+                    <h3>Отбеливание ZOOM 4</h3>
+                    <p>Безопасное осветление до 8 тонов за один сеанс с реминерализацией.</p>
+                    <div class="price">18 900 ₽<small>за обе челюсти</small></div>
+                </article>
+                <article class="price-card">
+                    <span class="price-card__tag">Имплантация</span>
+                    <h3>Имплант под ключ</h3>
+                    <p>Система Straumann, операция и установка коронки в стоимость.</p>
+                    <div class="price">34 900 ₽<small>за один имплант</small></div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="container about">
+            <div class="about__visual">
+                <span class="ring ring--one"></span>
+                <span class="ring ring--two"></span>
+                <div class="about__badge">
+                    <div>
+                        <b>0 ₽</b>
+                        <span>первый приём<br>и консультация</span>
+                    </div>
+                </div>
+                <div class="about__float">12 врачей<span>со стажем от 8 лет</span></div>
+            </div>
+            <div>
+                <span class="kicker">Почему пациенты выбирают нас</span>
+                <h2>Лечение, которому доверяют семьи</h2>
+                <p>Мы работаем по протоколам доказательной стоматологии и подбираем лечение под ваш бюджет. В клинике есть собственная цифровая лаборатория и компьютерная томография.</p>
+                <ul class="checks">
+                    <li><span class="check">✓</span><span>Анестезия без боли: компьютерная и аппликационная, под контролем врача</span></li>
+                    <li><span class="check">✓</span><span>План лечения с фиксированной стоимостью и сроками на бумаге</span></li>
+                    <li><span class="check">✓</span><span>Стерилизация инструментов и одноразовые наборы для каждого пациента</span></li>
+                    <li><span class="check">✓</span><span>Рассрочка 0% на лечение и имплантацию до 12 месяцев</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contacts">
+        <div class="container">
+            <div class="cta">
+                <div class="cta__inner">
+                    <div>
+                        <h2>Первый шаг к улыбке — один звонок</h2>
+                        <p>Администратор подберёт удобное время и ответит на вопросы. Или напишите нам в чат прямо сейчас.</p>
+                    </div>
+                    <a class="btn btn--light" href="tel:+74952223344">+7 (495) 222-33-44</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container footer__inner">
+        <span>Стоматология «Улыбка» © 2026. Москва, ул. Лесная, 12.</span>
+        <span>Лицензия ЛО-77-01-000000. Имеются противопоказания, необходима консультация специалиста.</span>
+    </div>
+</footer>
+
+<button class="chat-button" id="chatToggle" type="button" aria-label="Открыть чат">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.4 8.9 8.9 0 0 1-3.8-.9L3 21l1.9-5.6a8.3 8.3 0 0 1-.9-3.9A8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z"></path>
+    </svg>
+    <span class="chat-button__badge">1</span>
+</button>
+
+<section class="chat" id="chat" aria-label="Чат с клиникой">
+    <div class="chat__head">
+        <div class="chat__avatar">У</div>
+        <div class="chat__who">
+            <b>Ассистент «Улыбки»</b>
+            <span>Онлайн · отвечаем за минуту</span>
+        </div>
+        <button class="chat__close" id="chatClose" type="button" aria-label="Закрыть чат">×</button>
+    </div>
+    <div class="chat__messages" id="chatMessages"></div>
+    <div class="chat__quick">
+        <button class="quick" type="button" data-quick="Сколько стоит чистка?">Сколько стоит чистка?</button>
+        <button class="quick" type="button" data-quick="Да">Да</button>
+        <button class="quick" type="button" data-quick="Хочу записаться">Хочу записаться</button>
+    </div>
+    <form class="chat__form" id="chatForm">
+        <input class="chat__input" id="chatInput" type="text" placeholder="Напишите сообщение..." autocomplete="off" maxlength="300">
+        <button class="chat__send" type="submit" aria-label="Отправить">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 2 11 13"></path>
+                <path d="M22 2 15 22l-4-9-9-4 20-7z"></path>
+            </svg>
+        </button>
+    </form>
+    <div class="chat__note">Демо-чат. Ответы носят справочный характер.</div>
+</section>
+
+<script>
+    const chat = document.getElementById("chat");
+    const chatToggle = document.getElementById("chatToggle");
+    const chatClose = document.getElementById("chatClose");
+    const chatMessages = document.getElementById("chatMessages");
+    const chatForm = document.getElementById("chatForm");
+    const chatInput = document.getElementById("chatInput");
+    const badge = chatToggle.querySelector(".chat-button__badge");
+    const quickButtons = document.querySelectorAll(".quick");
+
+    const dialog = {
+        offerPending: false,
+        awaitingPhone: false,
+        greeted: false
+    };
+
+    function normalize(text) {
+        return text.toLowerCase().replace(/ё/g, "е").replace(/[^a-zа-я0-9\s?]/gi, " ").replace(/\s+/g, " ").trim();
+    }
+
+    function addMessage(text, author) {
+        const row = document.createElement("div");
+        row.className = "message message--" + author;
+        if (author === "bot") {
+            const avatar = document.createElement("span");
+            avatar.className = "message__avatar";
+            avatar.textContent = "У";
+            row.appendChild(avatar);
+        }
+        const bubble = document.createElement("div");
+        bubble.className = "message__bubble";
+        bubble.textContent = text;
+        row.appendChild(bubble);
+        chatMessages.appendChild(row);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        return row;
+    }
+
+    function showTyping() {
+        const row = document.createElement("div");
+        row.className = "message message--bot";
+        row.id = "typingRow";
+        const avatar = document.createElement("span");
+        avatar.className = "message__avatar";
+        avatar.textContent = "У";
+        const bubble = document.createElement("div");
+        bubble.className = "message__bubble";
+        const typing = document.createElement("span");
+        typing.className = "typing";
+        typing.innerHTML = "<span></span><span></span><span></span>";
+        bubble.appendChild(typing);
+        row.appendChild(avatar);
+        row.appendChild(bubble);
+        chatMessages.appendChild(row);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function hideTyping() {
+        const row = document.getElementById("typingRow");
+        if (row) {
+            row.remove();
+        }
+    }
+
+    function botReply(text) {
+        showTyping();
+        window.setTimeout(function () {
+            hideTyping();
+            addMessage(text, "bot");
+        }, 620);
+    }
+
+    function getReply(raw) {
+        const text = normalize(raw);
+        const digits = raw.replace(/\D/g, "");
+
+        if (dialog.awaitingPhone) {
+            if (digits.length >= 10) {
+                dialog.awaitingPhone = false;
+                dialog.offerPending = false;
+                return "Спасибо! Записал вас на консультацию. Администратор свяжется в течение 15 минут.";
+            }
+            return "Оставьте номер телефона, и администратор подберёт удобное время.";
+        }
+
+        if (text.includes("сколько стоит чистка") || text.includes("стоимость чистки") || text.includes("цена чистки")) {
+            dialog.offerPending = true;
+            return "4500 руб. Записать вас?";
+        }
+
+        if (dialog.offerPending && (text === "да" || text === "да конечно" || text === "конечно" || text === "запишите")) {
+            dialog.offerPending = false;
+            dialog.awaitingPhone = true;
+            return "Оставьте номер телефона.";
+        }
+
+        if (text.includes("запис")) {
+            dialog.awaitingPhone = true;
+            return "Оставьте номер телефона, и администратор подберёт удобное время.";
+        }
+
+        return "Передал администратору.";
+    }
+
+    function openChat() {
+        chat.classList.add("is-open");
+        badge.style.display = "none";
+        if (!dialog.greeted) {
+            dialog.greeted = true;
+            addMessage("Здравствуйте! Это ассистент клиники «Улыбка». Спросите про цены или запись — помогу сориентироваться.", "bot");
+        }
+        window.setTimeout(function () {
+            chatInput.focus();
+        }, 250);
+    }
+
+    function closeChat() {
+        chat.classList.remove("is-open");
+    }
+
+    chatToggle.addEventListener("click", function () {
+        if (chat.classList.contains("is-open")) {
+            closeChat();
+        } else {
+            openChat();
+        }
+    });
+
+    chatClose.addEventListener("click", closeChat);
+
+    document.getElementById("heroChat").addEventListener("click", openChat);
+
+    chatForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const value = chatInput.value.trim();
+        if (!value) {
+            return;
+        }
+        addMessage(value, "user");
+        chatInput.value = "";
+        botReply(getReply(value));
+    });
+
+    quickButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            const value = button.dataset.quick;
+            addMessage(value, "user");
+            botReply(getReply(value));
+        });
+    });
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && chat.classList.contains("is-open")) {
+            closeChat();
+        }
+    });
+</script>
+</body>
+</html>

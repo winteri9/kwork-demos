@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeadFlow — заявки прямо в Telegram</title>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    :root {
+        --ink: #10231d;
+        --ink-soft: #3f5a51;
+        --muted: #738c84;
+        --green: #0f9d6e;
+        --green-dark: #0a7351;
+        --mint: #e6f7f0;
+        --line: #dce9e3;
+        --surface: #ffffff;
+        --bg: #f3f8f5;
+        --danger: #d64545;
+        --radius: 18px;
+    }
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        min-height: 100vh;
+        background:
+            radial-gradient(circle at 12% 0%, rgba(15, 157, 110, 0.12), transparent 34%),
+            radial-gradient(circle at 94% 88%, rgba(45, 212, 191, 0.16), transparent 32%),
+            var(--bg);
+        color: var(--ink);
+        font-family: "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+        width: min(1120px, calc(100% - 48px));
+        margin: 0 auto;
+        padding: 30px 0 54px;
+    }
+
+    .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding-bottom: 26px;
+    }
+
+    .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        text-decoration: none;
+        color: var(--ink);
+    }
+
+    .brand__mark {
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 13px;
+        background: linear-gradient(135deg, #11b981, #0a7d5c);
+        color: #fff;
+        font-size: 19px;
+        box-shadow: 0 12px 26px rgba(15, 157, 110, 0.26);
+    }
+
+    .brand small {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .topbar__status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--ink-soft);
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #16c784;
+        box-shadow: 0 0 0 4px rgba(22, 199, 132, 0.14);
+    }
+
+    .hero {
+        display: grid;
+        grid-template-columns: 1.02fr 0.98fr;
+        gap: 56px;
+        align-items: start;
+        padding: 38px 0 18px;
+    }
+
+    .eyebrow {
+        display: inline-block;
+        padding: 7px 13px;
+        border-radius: 999px;
+        background: var(--mint);
+        color: var(--green-dark);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    h1 {
+        margin: 20px 0 16px;
+        font-size: clamp(34px, 4.4vw, 52px);
+        line-height: 1.06;
+        letter-spacing: -0.035em;
+    }
+
+    h1 span {
+        position: relative;
+        color: var(--green-dark);
+        white-space: nowrap;
+    }
+
+    h1 span::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 4px;
+        z-index: -1;
+        height: 10px;
+        border-radius: 4px;
+        background: rgba(17, 185, 129, 0.22);
+    }
+
+    .lead {
+        max-width: 480px;
+        margin: 0 0 28px;
+        color: var(--ink-soft);
+        font-size: 16px;
+    }
+
+    .flow {
+        display: grid;
+        gap: 12px;
+        margin: 0 0 30px;
+        padding: 0;
+        list-style: none;
+    }
+
+    .flow li {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        padding: 13px 16px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.72);
+        font-size: 13px;
+    }
+
+    .flow__num {
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        width: 26px;
+        height: 26px;
+        border-radius: 8px;
+        background: var(--mint);
+        color: var(--green-dark);
+        font-size: 11px;
+        font-weight: 800;
+    }
+
+    .flow b {
+        font-weight: 700;
+    }
+
+    .flow span {
+        color: var(--muted);
+    }
+
+    .trust {
+        display: flex;
+        gap: 30px;
+        padding-top: 24px;
+        border-top: 1px solid var(--line);
+    }
+
+    .trust b {
+        display: block;
+        font-size: 22px;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+    }
+
+    .trust span {
+        color: var(--muted);
+        font-size: 11px;
+    }
+
+    .card {
+        position: relative;
+        padding: 30px;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: var(--surface);
+        box-shadow: 0 30px 70px rgba(20, 60, 45, 0.12);
+    }
+
+    .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 30px;
+        right: 30px;
+        height: 3px;
+        border-radius: 0 0 3px 3px;
+        background: linear-gradient(90deg, #11b981, #2dd4bf);
+    }
+
+    .card__head {
+        margin-bottom: 22px;
+    }
+
+    .card__head h2 {
+        margin: 0 0 5px;
+        font-size: 22px;
+        letter-spacing: -0.02em;
+    }
+
+    .card__head p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .form {
+        display: grid;
+        gap: 15px;
+    }
+
+    .field {
+        display: grid;
+        gap: 6px;
+    }
+
+    .field label {
+        color: var(--ink-soft);
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .field label i {
+        color: var(--danger);
+        font-style: normal;
+    }
+
+    .control {
+        width: 100%;
+        padding: 13px 15px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        outline: none;
+        background: #fbfdfc;
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 14px;
+        transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+
+    .control::placeholder {
+        color: #a3b6af;
+    }
+
+    .control:focus {
+        border-color: var(--green);
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(15, 157, 110, 0.12);
+    }
+
+    .control.is-error {
+        border-color: var(--danger);
+    }
+
+    select.control {
+        appearance: none;
+        background-image: linear-gradient(45deg, transparent 50%, #6d857c 50%), linear-gradient(135deg, #6d857c 50%, transparent 50%);
+        background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%;
+        background-size: 5px 5px, 5px 5px;
+        background-repeat: no-repeat;
+    }
+
+    .error {
+        min-height: 14px;
+        color: var(--danger);
+        font-size: 10px;
+    }
+
+    .submit {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        width: 100%;
+        margin-top: 2px;
+        padding: 14px 20px;
+        border: 0;
+        border-radius: 12px;
+        background: linear-gradient(120deg, #11b981, #0a8a63);
+        color: #fff;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 14px 28px rgba(15, 157, 110, 0.26);
+        transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    }
+
+    .submit:hover:not(:disabled) {
+        box-shadow: 0 18px 34px rgba(15, 157, 110, 0.32);
+    }
+
+    .submit:active:not(:disabled) {
+        transform: scale(0.985);
+    }
+
+    .submit:disabled {
+        opacity: 0.68;
+        cursor: wait;
+    }
+
+    .submit svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .note {
+        margin: 12px 0 0;
+        color: #93a69f;
+        font-size: 10px;
+        text-align: center;
+    }
+
+    .status {
+        display: none;
+        margin-top: 14px;
+        padding: 11px 14px;
+        border-radius: 11px;
+        font-size: 12px;
+    }
+
+    .status.is-visible {
+        display: block;
+    }
+
+    .status--ok {
+        border: 1px solid #b7e6d4;
+        background: #edfaf4;
+        color: #0a7351;
+    }
+
+    .status--err {
+        border: 1px solid #f2c7c7;
+        background: #fdf1f1;
+        color: #a52f2f;
+    }
+
+    .success {
+        display: none;
+        padding: 18px 0 6px;
+        text-align: center;
+    }
+
+    .success.is-visible {
+        display: block;
+    }
+
+    .success__icon {
+        display: grid;
+        place-items: center;
+        width: 54px;
+        height: 54px;
+        margin: 0 auto 14px;
+        border-radius: 50%;
+        background: var(--mint);
+        color: var(--green-dark);
+        font-size: 24px;
+    }
+
+    .success h3 {
+        margin: 0 0 6px;
+        font-size: 20px;
+    }
+
+    .success p {
+        margin: 0 0 14px;
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .again {
+        padding: 9px 16px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #fff;
+        color: var(--ink-soft);
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .again:hover {
+        border-color: var(--green);
+        color: var(--green-dark);
+    }
+
+    .pagefoot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 44px;
+        padding-top: 20px;
+        border-top: 1px solid var(--line);
+        color: #8ba39a;
+        font-size: 11px;
+    }
+
+    .pagefoot code {
+        padding: 2px 6px;
+        border-radius: 5px;
+        background: rgba(16, 35, 29, 0.06);
+        font-family: "Cascadia Code", Consolas, monospace;
+        font-size: 10px;
+    }
+
+    @media (max-width: 900px) {
+        .hero {
+            grid-template-columns: 1fr;
+            gap: 32px;
+            padding-top: 18px;
+        }
+
+        .card {
+            max-width: 560px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .page {
+            width: calc(100% - 32px);
+            padding-top: 20px;
+        }
+
+        .topbar__status {
+            display: none;
+        }
+
+        .card {
+            padding: 22px 18px;
+        }
+
+        h1 {
+            font-size: 34px;
+        }
+
+        .trust {
+            gap: 20px;
+        }
+
+        .pagefoot {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+    }
+</style>
+</head>
+<body>
+<div class="page">
+    <header class="topbar">
+        <a class="brand" href="#">
+            <span class="brand__mark">LF</span>
+            <span>
+                LeadFlow
+                <small>автоматизация заявок</small>
+            </span>
+        </a>
+        <span class="topbar__status"><span class="dot"></span> Приём заявок активен</span>
+    </header>
+
+    <main class="hero">
+        <section>
+            <span class="eyebrow">Google Apps Script + Telegram</span>
+            <h1>Заявки с сайта — <span>прямо в Telegram</span></h1>
+            <p class="lead">Без CRM и программиста: клиент заполняет форму, вы получаете уведомление в рабочем чате за пару секунд. Настройка занимает 10 минут.</p>
+            <ul class="flow">
+                <li><span class="flow__num">1</span><span><b>Клиент оставляет заявку</b><br><span>Имя, телефон и услуга</span></span></li>
+                <li><span class="flow__num">2</span><span><b>Apps Script принимает запрос</b><br><span>Проверяет данные и формирует сообщение</span></span></li>
+                <li><span class="flow__num">3</span><span><b>Telegram присылает уведомление</b><br><span>Менеджер отвечает без задержки</span></span></li>
+            </ul>
+            <div class="trust">
+                <div><b>2 сек</b><span>среднее время доставки</span></div>
+                <div><b>0 ₽</b><span>стоимость инфраструктуры</span></div>
+                <div><b>24/7</b><span>работает без выходных</span></div>
+            </div>
+        </section>
+
+        <section class="card" aria-label="Форма заявки">
+            <div class="card__head">
+                <h2>Оставьте заявку</h2>
+                <p>Перезвоним в течение 15 минут в рабочее время.</p>
+            </div>
+            <form class="form" id="leadForm" novalidate>
+                <div class="field">
+                    <label for="name">Ваше имя <i>*</i></label>
+                    <input class="control" id="name" name="name" type="text" placeholder="Алексей" autocomplete="name" maxlength="60">
+                    <span class="error" id="nameError"></span>
+                </div>
+                <div class="field">
+                    <label for="phone">Телефон <i>*</i></label>
+                    <input class="control" id="phone" name="phone" type="tel" placeholder="+7 (999) 123-45-67" autocomplete="tel" maxlength="20">
+                    <span class="error" id="phoneError"></span>
+                </div>
+                <div class="field">
+                    <label for="service">Услуга <i>*</i></label>
+                    <select class="control" id="service" name="service">
+                        <option value="">Выберите услугу</option>
+                        <option value="Сайт под ключ">Сайт под ключ</option>
+                        <option value="Телеграм-бот">Телеграм-бот</option>
+                        <option value="Автоматизация заявок">Автоматизация заявок</option>
+                        <option value="Другое">Другое</option>
+                    </select>
+                    <span class="error" id="serviceError"></span>
+                </div>
+                <button class="submit" id="submit" type="submit">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M22 2 11 13"></path>
+                        <path d="M22 2 15 22l-4-9-9-4 20-7z"></path>
+                    </svg>
+                    Отправить заявку
+                </button>
+                <p class="note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных.</p>
+                <div class="status" id="status" role="status"></div>
+            </form>
+            <div class="success" id="success">
+                <div class="success__icon">✓</div>
+                <h3>Заявка отправлена</h3>
+                <p id="successText">Сообщение уже летит в Telegram. Мы свяжемся с вами очень скоро.</p>
+                <button class="again" id="again" type="button">Отправить ещё одну</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="pagefoot">
+        <span>LeadFlow © 2026. Демо-проект автоматизации заявок.</span>
+        <span>URL веб-приложения: <code>YOUR_SCRIPT_URL</code></span>
+    </footer>
+</div>
+
+<script>
+    const SCRIPT_URL = "YOUR_SCRIPT_URL";
+
+    const form = document.getElementById("leadForm");
+    const nameInput = document.getElementById("name");
+    const phoneInput = document.getElementById("phone");
+    const serviceInput = document.getElementById("service");
+    const nameError = document.getElementById("nameError");
+    const phoneError = document.getElementById("phoneError");
+    const serviceError = document.getElementById("serviceError");
+    const statusBox = document.getElementById("status");
+    const submitButton = document.getElementById("submit");
+    const successBox = document.getElementById("success");
+    const successText = document.getElementById("successText");
+
+    function setStatus(text, type) {
+        statusBox.textContent = text;
+        statusBox.className = "status is-visible status--" + type;
+    }
+
+    function clearStatus() {
+        statusBox.textContent = "";
+        statusBox.className = "status";
+    }
+
+    function resetErrors() {
+        [nameInput, phoneInput, serviceInput].forEach(function (input) {
+            input.classList.remove("is-error");
+        });
+        nameError.textContent = "";
+        phoneError.textContent = "";
+        serviceError.textContent = "";
+        clearStatus();
+    }
+
+    function validate() {
+        let valid = true;
+        const name = nameInput.value.trim();
+        const digits = phoneInput.value.replace(/\D/g, "");
+
+        if (name.length < 2) {
+            nameInput.classList.add("is-error");
+            nameError.textContent = "Укажите имя, минимум 2 символа";
+            valid = false;
+        }
+
+        if (digits.length < 10) {
+            phoneInput.classList.add("is-error");
+            phoneError.textContent = "Введите корректный номер телефона";
+            valid = false;
+        }
+
+        if (!serviceInput.value) {
+            serviceInput.classList.add("is-error");
+            serviceError.textContent = "Выберите услугу";
+            valid = false;
+        }
+
+        return valid;
+    }
+
+    function isDemo() {
+        return SCRIPT_URL.indexOf("YOUR_SCRIPT_URL") !== -1;
+    }
+
+    async function sendLead(payload) {
+        if (isDemo()) {
+            console.log("Демо-режим. Заявка:", payload);
+            await new Promise(function (resolve) {
+                window.setTimeout(resolve, 700);
+            });
+            return { ok: true, demo: true };
+        }
+
+        const response = await fetch(SCRIPT_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
+
+        const result = await response.json();
+        if (result && result.ok === false) {
+            throw new Error(result.error || "Сервер отклонил заявку");
+        }
+        return result;
+    }
+
+    [nameInput, phoneInput, serviceInput].forEach(function (input) {
+        input.addEventListener("input", function () {
+            input.classList.remove("is-error");
+            clearStatus();
+        });
+        input.addEventListener("change", function () {
+            input.classList.remove("is-error");
+            clearStatus();
+        });
+    });
+
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        resetErrors();
+
+        if (!validate()) {
+            return;
+        }
+
+        const payload = {
+            name: nameInput.value.trim(),
+            phone: phoneInput.value.trim(),
+            service: serviceInput.value,
+            createdAt: new Date().toISOString()
+        };
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Отправляем...";
+        setStatus("Отправляем заявку...", "ok");
+
+        try {
+            const result = await sendLead(payload);
+            form.style.display = "none";
+            successText.textContent = result.demo
+                ? "Демо-режим: данные выведены в консоль. Подставьте URL Apps Script, чтобы получать заявки в Telegram."
+                : "Сообщение уже летит в Telegram. Мы свяжемся с вами очень скоро.";
+            successBox.classList.add("is-visible");
+        } catch (error) {
+            console.error("Ошибка отправки:", error);
+            setStatus("Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.", "err");
+        } finally {
+            submitButton.disabled = false;
+            submitButton.innerHTML = "Отправить заявку";
+        }
+    });
+
+    document.getElementById("again").addEventListener("click", function () {
+        form.reset();
+        form.style.display = "";
+        successBox.classList.remove("is-visible");
+        resetErrors();
+        nameInput.focus();
+    });
+</script>
+</body>
+</html>
