@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Бар Капибар — место, где можно расслабиться</title>
+<meta name="description" content="Бар Капибар на Таганской: капибара-латте, облепиховый чай, сырная тарелка и картофель с трюфелем. Бронирование столиков, демо-сайт.">
+<meta name="theme-color" content="#fdf6e9">
+<style>
+:root{
+  --cream:#fdf6e9;
+  --cream-2:#faf1de;
+  --beige:#f4e3c8;
+  --beige-deep:#ecd3ae;
+  --card:#fffdf8;
+  --brown:#5b3a24;
+  --brown-soft:#8a6244;
+  --brown-deep:#3f2717;
+  --green:#4f7a52;
+  --green-deep:#375b3b;
+  --green-light:#cfe3c6;
+  --green-pale:#e8f1e2;
+  --orange:#e8a33d;
+  --orange-deep:#d08a23;
+  --line:#e7d5b8;
+  --shadow:0 24px 48px -30px rgba(91,58,36,.55);
+  --shadow-soft:0 14px 28px -20px rgba(91,58,36,.55);
+  --display:"Trebuchet MS","Segoe UI",Verdana,sans-serif;
+  --sans:"Segoe UI","Inter",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);
+  color:var(--brown);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:.5;
+  background-image:radial-gradient(rgba(79,122,82,.12) 1.2px,transparent 1.2px);
+  background-size:24px 24px;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+.wrap{width:min(1150px,calc(100% - 44px));margin-inline:auto;position:relative;z-index:1}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(253,246,233,.9);
+  backdrop-filter:blur(12px) saturate(140%);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s ease,box-shadow .3s ease;
+}
+.header.is-stuck{border-bottom-color:var(--line);box-shadow:0 12px 26px -24px rgba(91,58,36,.8)}
+.header__inner{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 0}
+.brand{display:flex;align-items:center;gap:11px}
+.brand__mark{width:52px;height:52px;flex:none}
+.brand__name{font-family:var(--display);font-size:24px;line-height:1;font-weight:700;letter-spacing:-.01em}
+.brand__name b{color:var(--green);font-weight:700}
+.brand__sub{display:block;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--brown-soft);margin-top:5px}
+.nav{display:flex;align-items:center;gap:24px}
+.nav a{font-size:14px;color:var(--brown-soft);padding:6px 0;position:relative;transition:color .2s ease}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+.nav a:hover{color:var(--brown)}
+.nav a:hover::after{transform:scaleX(1)}
+.header__side{display:flex;align-items:center;gap:16px}
+.header__phone{font-weight:700;font-size:15px;white-space:nowrap}
+.header__phone small{display:block;font-weight:400;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--brown-soft)}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  padding:15px 28px;
+  border-radius:999px;
+  border:2px solid transparent;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+  transition:transform .16s ease,box-shadow .2s ease,background .2s ease,color .2s ease,border-color .2s ease;
+}
+.btn--green{background:var(--green);color:#fdf9f1;box-shadow:0 14px 26px -14px rgba(79,122,82,.9)}
+.btn--green:hover{background:var(--green-deep);transform:translateY(-3px)}
+.btn--orange{background:var(--orange);color:#4a2f14;box-shadow:0 14px 26px -14px rgba(232,163,61,.95)}
+.btn--orange:hover{background:var(--orange-deep);transform:translateY(-3px)}
+.btn--line{border-color:var(--brown);color:var(--brown);background:transparent}
+.btn--line:hover{background:var(--brown);color:var(--cream);transform:translateY(-3px)}
+.btn--sm{padding:11px 20px;font-size:13px}
+
+.hero{position:relative;padding:56px 0 76px;overflow:hidden}
+.hero__blob{position:absolute;border-radius:50%;pointer-events:none}
+.hero__blob--green{width:560px;height:560px;right:-160px;top:-140px;background:radial-gradient(circle,rgba(79,122,82,.2),rgba(79,122,82,0) 68%)}
+.hero__blob--beige{width:520px;height:520px;left:-200px;bottom:-180px;background:radial-gradient(circle,rgba(236,211,174,.85),rgba(236,211,174,0) 70%)}
+.hero__grid{display:grid;grid-template-columns:1.02fr .98fr;gap:44px;align-items:center}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  background:var(--green-pale);
+  border:1.5px dashed var(--green);
+  color:var(--green-deep);
+  border-radius:999px;
+  padding:8px 16px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.06em;
+}
+.badge i{width:8px;height:8px;border-radius:50%;background:var(--green);display:block}
+h1{
+  font-family:var(--display);
+  font-size:clamp(46px,7vw,84px);
+  line-height:.98;
+  letter-spacing:-.03em;
+  margin-top:18px;
+  font-weight:700;
+}
+h1 span{color:var(--green)}
+.hero__slogan{
+  display:inline-block;
+  margin-top:14px;
+  background:var(--beige);
+  color:var(--brown-deep);
+  border-radius:14px;
+  padding:6px 16px;
+  font-size:17px;
+  font-weight:700;
+  transform:rotate(-1.4deg);
+  box-shadow:2px 3px 0 rgba(91,58,36,.18);
+}
+.hero__lead{max-width:44ch;margin-top:20px;font-size:16.5px;color:var(--brown-soft)}
+.hero__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.hero__facts{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+.fact{
+  background:var(--card);
+  border:1.5px solid var(--line);
+  border-radius:16px;
+  padding:10px 16px;
+  font-size:13px;
+  color:var(--brown-soft);
+  box-shadow:var(--shadow-soft);
+}
+.fact b{display:block;font-size:17px;color:var(--brown);font-family:var(--display)}
+
+.scene{
+  position:relative;
+  background:linear-gradient(170deg,#fffdf7,var(--beige));
+  border:2px solid var(--line);
+  border-radius:40px;
+  padding:26px;
+  box-shadow:var(--shadow);
+}
+.scene__capy{position:relative;z-index:2}
+.scene__steam{
+  position:absolute;
+  left:52%;top:8%;
+  width:70px;height:90px;
+  pointer-events:none;
+}
+.scene__steam span{
+  position:absolute;
+  bottom:0;
+  width:12px;height:12px;
+  border-radius:50%;
+  background:rgba(91,58,36,.22);
+  animation:rise 3.4s ease-in-out infinite;
+}
+.scene__steam span:nth-child(1){left:6px;animation-delay:0s}
+.scene__steam span:nth-child(2){left:28px;animation-delay:.7s}
+.scene__steam span:nth-child(3){left:50px;animation-delay:1.4s}
+@keyframes rise{0%{opacity:0;transform:translateY(20px) scale(.6)}35%{opacity:1}100%{opacity:0;transform:translateY(-70px) scale(1.35)}}
+.scene__sticker{
+  position:absolute;
+  background:var(--orange);
+  color:#4a2f14;
+  font-size:12.5px;
+  font-weight:700;
+  border-radius:12px;
+  padding:8px 14px;
+  box-shadow:2px 3px 0 rgba(91,58,36,.22);
+  z-index:3;
+}
+.scene__sticker--one{top:16px;left:-6px;transform:rotate(-6deg)}
+.scene__sticker--two{top:74px;right:-8px;transform:rotate(4deg);background:var(--green);color:#f3faf0}
+.scene__note{
+  margin-top:14px;
+  background:var(--card);
+  border:1.5px dashed var(--line);
+  border-radius:14px;
+  padding:10px 14px;
+  font-size:13px;
+  color:var(--brown-soft);
+  text-align:center;
+}
+.scene__note b{color:var(--brown)}
+
+.section{padding:76px 0;position:relative;z-index:1}
+.section--beige{background:linear-gradient(180deg,var(--cream),var(--cream-2) 14%,var(--cream-2) 86%,var(--cream))}
+.section--green{background:var(--green-pale)}
+.head{max-width:620px;margin-bottom:38px}
+.head h2{font-family:var(--display);font-size:clamp(30px,4.2vw,46px);line-height:1.08;letter-spacing:-.02em}
+.head p{margin-top:12px;color:var(--brown-soft)}
+
+.menu{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.dish{
+  background:var(--card);
+  border:2px solid var(--line);
+  border-radius:26px;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  box-shadow:var(--shadow-soft);
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+  position:relative;
+}
+.dish:hover{transform:translateY(-7px) rotate(-.6deg);box-shadow:0 26px 40px -26px rgba(91,58,36,.6);border-color:var(--beige-deep)}
+.dish__icon{
+  width:74px;height:74px;
+  border-radius:22px;
+  background:var(--green-pale);
+  display:grid;place-items:center;
+  margin-bottom:4px;
+}
+.dish__tag{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--green)}
+.dish h3{font-family:var(--display);font-size:20px;line-height:1.2}
+.dish p{font-size:13.5px;color:var(--brown-soft);flex:1}
+.dish__price{
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1.5px dashed var(--line);
+  padding-top:12px;
+  margin-top:4px;
+}
+.dish__price b{font-family:var(--display);font-size:22px;color:var(--brown)}
+.dish__add{
+  border:1.5px solid var(--line);
+  background:var(--cream);
+  color:var(--green-deep);
+  border-radius:999px;
+  padding:7px 14px;
+  font-size:12.5px;
+  font-weight:700;
+  cursor:pointer;
+  transition:background .2s ease,transform .16s ease;
+}
+.dish__add:hover{background:var(--green-light);transform:scale(1.04)}
+
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.fact-card{
+  background:var(--card);
+  border:2px solid var(--line);
+  border-radius:24px;
+  padding:24px;
+  box-shadow:var(--shadow-soft);
+}
+.fact-card__emoji{font-size:30px;line-height:1}
+.fact-card h3{font-family:var(--display);font-size:20px;margin:12px 0 6px}
+.fact-card p{font-size:14px;color:var(--brown-soft)}
+
+.booking{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-radius:32px;
+  overflow:hidden;
+  border:2px solid var(--line);
+  background:linear-gradient(150deg,#fffdf8,var(--beige));
+  box-shadow:var(--shadow);
+}
+.booking__left{padding:44px 42px;position:relative}
+.booking__left h2{font-family:var(--display);font-size:clamp(30px,4vw,44px);line-height:1.05;letter-spacing:-.02em}
+.booking__left > p{margin-top:14px;color:var(--brown-soft);max-width:38ch}
+.booking__list{margin-top:24px;display:grid;gap:10px}
+.booking__list div{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:var(--brown-soft)}
+.booking__list span{color:var(--green);font-weight:700}
+.booking__capy{margin-top:26px;width:150px}
+.booking__right{padding:40px 36px;background:var(--card);border-left:2px solid var(--line);display:grid;align-content:center;gap:13px}
+.field{display:grid;gap:6px}
+.field label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--brown-soft)}
+.field input,.field select{
+  width:100%;
+  padding:12px 14px;
+  border-radius:13px;
+  border:1.5px solid var(--line);
+  background:var(--cream);
+  color:var(--brown);
+  font-family:var(--sans);
+  font-size:15px;
+  outline:none;
+  transition:border-color .18s ease,background .18s ease;
+}
+.field input:focus,.field select:focus{border-color:var(--green);background:#fff}
+.field--row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hint{font-size:12.5px;color:var(--brown-soft);line-height:1.5}
+.hint b{color:var(--green-deep)}
+.hint--ok{background:var(--green-pale);border:1.5px dashed var(--green);border-radius:12px;padding:11px 13px;color:var(--green-deep)}
+
+.footer{background:var(--beige);border-top:2px solid var(--line);padding:46px 0 30px}
+.footer__grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:28px}
+.footer h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--brown-soft);margin-bottom:12px}
+.footer p,.footer a{font-size:14.5px;line-height:1.9}
+.footer a:hover{color:var(--green-deep)}
+.footer__bottom{margin-top:30px;padding-top:18px;border-top:1.5px dashed #ddc6a6;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--brown-soft)}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.reveal.is-in{opacity:1;transform:none}
+@media print{.reveal{opacity:1 !important;transform:none !important}}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .scene__steam span{animation:none;opacity:.25}
+  html{scroll-behavior:auto}
+}
+
+.burger{display:none;width:46px;height:46px;border-radius:14px;border:2px solid var(--line);background:var(--card);cursor:pointer;padding:12px}
+.burger span{display:block;height:2.5px;border-radius:3px;background:var(--brown);margin:4px 0;transition:transform .2s ease,opacity .2s ease}
+.burger.is-open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.burger.is-open span:nth-child(2){opacity:0}
+.burger.is-open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+@media (max-width:1000px){
+  .hero__grid{grid-template-columns:1fr;gap:36px}
+  .hero{padding:36px 0 60px}
+  .menu{grid-template-columns:1fr 1fr}
+  .facts{grid-template-columns:1fr}
+  .booking{grid-template-columns:1fr}
+  .booking__right{border-left:0;border-top:2px solid var(--line)}
+  .footer__grid{grid-template-columns:1fr 1fr}
+  .nav{
+    position:absolute;
+    top:100%;left:0;right:0;
+    display:none;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:0;
+    background:var(--cream);
+    border-bottom:2px solid var(--line);
+    padding:10px 22px 18px;
+    box-shadow:var(--shadow-soft);
+  }
+  .nav.is-open{display:flex}
+  .nav a{width:100%;padding:12px 0;border-bottom:1.5px dashed var(--line);font-size:15px}
+  .nav a::after{display:none}
+  .burger{display:block}
+  .header__phone{display:none}
+  .section{padding:60px 0}
+  .booking__left{padding:32px 24px}
+  .booking__right{padding:28px 22px}
+}
+@media (max-width:620px){
+  .wrap{width:calc(100% - 30px)}
+  .menu{grid-template-columns:1fr}
+  .scene{padding:18px;border-radius:28px}
+  .scene__sticker--one{left:4px;top:10px}
+  .scene__sticker--two{right:4px;bottom:14px}
+  .btn{width:100%}
+  .hero__actions{gap:10px}
+  .hero__facts{gap:8px}
+  .fact{padding:9px 13px;font-size:12px}
+  .brand__name{font-size:20px;white-space:nowrap}
+  .header__side .btn{display:none}
+  .footer__grid{grid-template-columns:1fr}
+  .field--row{grid-template-columns:1fr}
+  .booking__capy{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="wrap header__inner">
+    <a class="brand" href="#top">
+      <svg class="brand__mark" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <circle cx="32" cy="32" r="31" fill="#cfe3c6"/>
+        <ellipse cx="32" cy="44" rx="19" ry="12" fill="#b98356"/>
+        <rect x="13" y="18" width="38" height="26" rx="13" fill="#c08f60"/>
+        <circle cx="17" cy="21" r="5" fill="#8a5f3c"/>
+        <circle cx="47" cy="21" r="5" fill="#8a5f3c"/>
+        <ellipse cx="32" cy="38" rx="13" ry="9" fill="#d6a97c"/>
+        <ellipse cx="27" cy="37" rx="2" ry="1.6" fill="#5b3a24"/>
+        <ellipse cx="37" cy="37" rx="2" ry="1.6" fill="#5b3a24"/>
+        <circle cx="24" cy="29" r="2.6" fill="#3f2717"/>
+        <circle cx="40" cy="29" r="2.6" fill="#3f2717"/>
+        <circle cx="32" cy="14" r="6" fill="#e8a33d"/>
+      </svg>
+      <span>
+        <span class="brand__name">Бар <b>Капибар</b></span>
+        <span class="brand__sub">Напитки · закуски</span>
+      </span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#menu">Меню</a>
+      <a href="#why">Почему мы</a>
+      <a href="#booking">Бронь</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <div class="header__side">
+      <a class="header__phone" href="tel:+74952121663">
+        <small>Бронь по телефону</small>
+        +7 495 212-16-63
+      </a>
+      <a class="btn btn--green btn--sm" href="#booking">Забронировать</a>
+      <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="hero__blob hero__blob--green"></div>
+    <div class="hero__blob hero__blob--beige"></div>
+    <div class="wrap hero__grid">
+      <div>
+        <span class="badge"><i></i>Таганская ул, 13 ст2 · Москва</span>
+        <h1>Бар <span>Капибар</span></h1>
+        <div class="hero__slogan">Место, где можно расслабиться</div>
+        <p class="hero__lead">
+          Никто никуда не спешит: капибара-латте, облепиховый чай и сырная тарелка
+          на двоих. У нас можно сидеть два часа с одной чашкой — и это считается нормой.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--orange" href="#booking">Забронировать столик</a>
+          <a class="btn btn--line" href="#menu">Посмотреть меню</a>
+        </div>
+        <div class="hero__facts">
+          <div class="fact"><b>12:00</b>открываемся</div>
+          <div class="fact"><b>24 места</b>и два дивана</div>
+          <div class="fact"><b>до 2:00</b>работаем в пятницу</div>
+        </div>
+      </div>
+      <div class="scene">
+        <div class="scene__sticker scene__sticker--one">Таганская, 13 ст2</div>
+        <div class="scene__sticker scene__sticker--two">Wi-Fi и розетки</div>
+        <div class="scene__steam">
+          <span></span><span></span><span></span>
+        </div>
+        <svg class="scene__capy" viewBox="0 0 340 320" fill="none" role="img" aria-label="Капибара с чашкой">
+          <ellipse cx="170" cy="286" rx="118" ry="18" fill="#c9a97f" opacity=".45"/>
+          <ellipse cx="170" cy="212" rx="106" ry="74" fill="#b98356"/>
+          <ellipse cx="170" cy="220" rx="78" ry="52" fill="#c89a6d"/>
+          <rect x="72" y="88" width="196" height="128" rx="64" fill="#c08f60"/>
+          <circle cx="88" cy="96" r="17" fill="#8a5f3c"/>
+          <circle cx="252" cy="96" r="17" fill="#8a5f3c"/>
+          <circle cx="88" cy="96" r="8" fill="#6d4728"/>
+          <circle cx="252" cy="96" r="8" fill="#6d4728"/>
+          <ellipse cx="170" cy="176" rx="66" ry="42" fill="#d6a97c"/>
+          <ellipse cx="152" cy="170" rx="7.5" ry="5.5" fill="#5b3a24"/>
+          <ellipse cx="188" cy="170" rx="7.5" ry="5.5" fill="#5b3a24"/>
+          <path d="M158 192c4 5 20 5 24 0" stroke="#7d4f2c" stroke-width="3.5" stroke-linecap="round"/>
+          <circle cx="126" cy="132" r="9.5" fill="#3f2717"/>
+          <circle cx="214" cy="132" r="9.5" fill="#3f2717"/>
+          <circle cx="129" cy="128" r="3.2" fill="#fffdf8" opacity=".9"/>
+          <circle cx="217" cy="128" r="3.2" fill="#fffdf8" opacity=".9"/>
+          <ellipse cx="108" cy="158" rx="13" ry="8" fill="#e2a08a" opacity=".5"/>
+          <ellipse cx="232" cy="158" rx="13" ry="8" fill="#e2a08a" opacity=".5"/>
+          <circle cx="170" cy="72" r="21" fill="#e8a33d"/>
+          <circle cx="170" cy="72" r="21" stroke="#c9852a" stroke-width="2"/>
+          <path d="M170 55c4 4 4 30 0 34" stroke="#f4bf6f" stroke-width="2.5" stroke-linecap="round"/>
+          <ellipse cx="104" cy="196" rx="20" ry="26" fill="#b98356" transform="rotate(-12 104 196)"/>
+          <ellipse cx="236" cy="196" rx="20" ry="26" fill="#b98356" transform="rotate(12 236 196)"/>
+          <g transform="translate(196 214)">
+            <rect x="0" y="0" width="60" height="46" rx="12" fill="#fffdf8" stroke="#e7d5b8" stroke-width="3"/>
+            <path d="M60 12h9a10 10 0 0 1 0 20h-9" stroke="#e7d5b8" stroke-width="3" fill="none"/>
+            <ellipse cx="30" cy="6" rx="24" ry="7" fill="#c89a6d"/>
+            <path d="M24 0c2-6 8-8 12-9" stroke="#a97a52" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          </g>
+        </svg>
+        <div class="scene__note">Хозяйка бара — <b>капибара Капа</b>. Она не кусается, только смотрит</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--beige" id="menu">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>Что у нас есть</h2>
+        <p>Четыре позиции, которые заказывают чаще всего. Кухня работает до закрытия, бар — тоже.</p>
+      </div>
+      <div class="menu">
+        <article class="dish reveal">
+          <div class="dish__icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <rect x="7" y="12" width="22" height="17" rx="5" fill="#c89a6d"/>
+              <path d="M29 16h4a5 5 0 0 1 0 10h-4" stroke="#8a5f3c" stroke-width="2.5" fill="none"/>
+              <ellipse cx="18" cy="12" rx="11" ry="3.5" fill="#e7d5b8"/>
+              <path d="M14 6c1-2 3-3 5-3" stroke="#c9a97f" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="dish__tag">Напиток</span>
+          <h3>Капибара-латте</h3>
+          <p>Двойной эспрессо, молоко и карамельная пенка с рисунком капибары — как получится.</p>
+          <div class="dish__price"><b>280 ₽</b><button class="dish__add" type="button" data-name="Капибара-латте" data-price="280">Хочу</button></div>
+        </article>
+        <article class="dish reveal">
+          <div class="dish__icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <circle cx="20" cy="24" r="11" fill="#e8a33d"/>
+              <circle cx="20" cy="24" r="8" fill="#f4bf6f"/>
+              <path d="M20 13V6" stroke="#4f7a52" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M20 9c-4 0-6-2-6-5 4 0 6 2 6 5Z" fill="#4f7a52"/>
+            </svg>
+          </div>
+          <span class="dish__tag">Напиток</span>
+          <h3>Облепиховый чай</h3>
+          <p>Облепиха, апельсин, мёд и чабрец. Подаём в большом чайнике на двоих.</p>
+          <div class="dish__price"><b>240 ₽</b><button class="dish__add" type="button" data-name="Облепиховый чай" data-price="240">Хочу</button></div>
+        </article>
+        <article class="dish reveal">
+          <div class="dish__icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <path d="M6 30h28l-3 5H9l-3-5Z" fill="#c89a6d"/>
+              <path d="M11 30 20 8l9 22H11Z" fill="#f4bf6f"/>
+              <circle cx="17" cy="25" r="2.4" fill="#d99a3a"/>
+              <circle cx="23" cy="21" r="2.4" fill="#d99a3a"/>
+              <circle cx="20" cy="28" r="2" fill="#d99a3a"/>
+            </svg>
+          </div>
+          <span class="dish__tag">Закуска</span>
+          <h3>Сырная тарелка</h3>
+          <p>Пять сыров, мёд, орехи и виноград. Хорошо идёт под разговоры.</p>
+          <div class="dish__price"><b>590 ₽</b><button class="dish__add" type="button" data-name="Сырная тарелка" data-price="590">Хочу</button></div>
+        </article>
+        <article class="dish reveal">
+          <div class="dish__icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <path d="M10 22h20l-2 12H12l-2-12Z" fill="#e8a33d"/>
+              <path d="M10 22h20l-1 4H11l-1-4Z" fill="#f4bf6f"/>
+              <path d="M14 18c0-5 3-8 6-8s6 3 6 8" stroke="#c89a6d" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="20" cy="8" r="3" fill="#e8a33d"/>
+            </svg>
+          </div>
+          <span class="dish__tag">Закуска</span>
+          <h3>Картофель с трюфелем</h3>
+          <p>Тонкая соломка, трюфельный майонез и зелёный лук. Съедается первым.</p>
+          <div class="dish__price"><b>320 ₽</b><button class="dish__add" type="button" data-name="Картофель с трюфелем" data-price="320">Хочу</button></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="why">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>Почему у нас хорошо</h2>
+        <p>Бар работает по принципу капибары: никого не торопим и не тревожим.</p>
+      </div>
+      <div class="facts">
+        <article class="fact-card reveal">
+          <div class="fact-card__emoji">🦫</div>
+          <h3>Тут тихо</h3>
+          <p>Музыка на фоне, а не в ушах. Можно читать, работать и разговаривать без крика.</p>
+        </article>
+        <article class="fact-card reveal">
+          <div class="fact-card__emoji">🍵</div>
+          <h3>Не выгоняем</h3>
+          <p>Одна чашка — не повод уходить. Пока столик не забронирован, сидите сколько нужно.</p>
+        </article>
+        <article class="fact-card reveal">
+          <div class="fact-card__emoji">🐾</div>
+          <h3>Можно с собакой</h3>
+          <p>Небольшие собаки и все капибары проходят бесплатно. Воды нальём и хвостатому.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--green" id="booking">
+    <div class="wrap">
+      <div class="booking reveal">
+        <div class="booking__left">
+          <h2>Забронировать<br>столик</h2>
+          <p>Оставьте заявку — перезвоним и подтвердим. В пятницу и субботу бронь держим 30 минут.</p>
+          <div class="booking__list">
+            <div><span>✓</span>Стол на 2, 4 или 6 гостей</div>
+            <div><span>✓</span>Бронь на любое время с 12:00</div>
+            <div><span>✓</span>Для компании больше шести — звоните</div>
+          </div>
+          <svg class="booking__capy" viewBox="0 0 200 150" fill="none" aria-hidden="true">
+            <ellipse cx="100" cy="140" rx="70" ry="9" fill="#c9a97f" opacity=".4"/>
+            <ellipse cx="100" cy="104" rx="64" ry="42" fill="#b98356"/>
+            <rect x="44" y="40" width="112" height="76" rx="38" fill="#c08f60"/>
+            <circle cx="54" cy="44" r="10" fill="#8a5f3c"/>
+            <circle cx="146" cy="44" r="10" fill="#8a5f3c"/>
+            <ellipse cx="100" cy="92" rx="38" ry="24" fill="#d6a97c"/>
+            <ellipse cx="89" cy="88" rx="4" ry="3" fill="#5b3a24"/>
+            <ellipse cx="111" cy="88" rx="4" ry="3" fill="#5b3a24"/>
+            <circle cx="77" cy="66" r="5.5" fill="#3f2717"/>
+            <circle cx="123" cy="66" r="5.5" fill="#3f2717"/>
+            <circle cx="100" cy="32" r="12" fill="#e8a33d"/>
+          </svg>
+        </div>
+        <div class="booking__right">
+          <div class="field">
+            <label for="name">Имя</label>
+            <input id="name" type="text" placeholder="Как к вам обращаться" autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="phone">Телефон</label>
+            <input id="phone" type="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel">
+          </div>
+          <div class="field--row">
+            <div class="field">
+              <label for="guests">Гостей</label>
+              <select id="guests">
+                <option>2 гостя</option>
+                <option>3 гостя</option>
+                <option selected>4 гостя</option>
+                <option>6 гостей</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="time">Время</label>
+              <select id="time">
+                <option>12:00</option>
+                <option>14:00</option>
+                <option selected>18:00</option>
+                <option>20:00</option>
+                <option>22:00</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn--green" id="bookBtn" type="button">Забронировать столик</button>
+          <p class="hint" id="bookHint">Демо-режим: заявка не уходит на сервер. Чтобы забронировать по-настоящему, позвоните — <b>+7 495 212-16-63</b>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="contacts">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <a class="brand" href="#top">
+          <svg class="brand__mark" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <circle cx="32" cy="32" r="31" fill="#cfe3c6"/>
+            <ellipse cx="32" cy="44" rx="19" ry="12" fill="#b98356"/>
+            <rect x="13" y="18" width="38" height="26" rx="13" fill="#c08f60"/>
+            <circle cx="17" cy="21" r="5" fill="#8a5f3c"/>
+            <circle cx="47" cy="21" r="5" fill="#8a5f3c"/>
+            <ellipse cx="32" cy="38" rx="13" ry="9" fill="#d6a97c"/>
+            <ellipse cx="27" cy="37" rx="2" ry="1.6" fill="#5b3a24"/>
+            <ellipse cx="37" cy="37" rx="2" ry="1.6" fill="#5b3a24"/>
+            <circle cx="24" cy="29" r="2.6" fill="#3f2717"/>
+            <circle cx="40" cy="29" r="2.6" fill="#3f2717"/>
+            <circle cx="32" cy="14" r="6" fill="#e8a33d"/>
+          </svg>
+          <span>
+            <span class="brand__name">Бар <b>Капибар</b></span>
+            <span class="brand__sub">Напитки · закуски</span>
+          </span>
+        </a>
+        <p style="margin-top:12px">Маленький бар с большой капибарой.<br>Работаем с 12:00 до полуночи.</p>
+      </div>
+      <div>
+        <h4>Адрес</h4>
+        <p>Таганская ул, 13 ст2</p>
+        <p>Москва, 109004</p>
+        <p>вход с улицы</p>
+      </div>
+      <div>
+        <h4>Связь</h4>
+        <p><a href="tel:+74952121663">+7 495 212-16-63</a></p>
+        <p><a href="mailto:hello@barkapibar.ru">hello@barkapibar.ru</a></p>
+      </div>
+      <div>
+        <h4>Часы</h4>
+        <p>Пн — Чт 12:00 — 00:00</p>
+        <p>Пт — Сб 12:00 — 02:00</p>
+        <p>Вс 12:00 — 23:00</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© <span id="year">2026</span> Бар Капибар. Демонстрационный проект.</span>
+      <span>Сделано на чистом HTML, CSS и JavaScript</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const revealAll = () => document.querySelectorAll('.reveal:not(.is-in)').forEach((el) => el.classList.add('is-in'));
+setTimeout(revealAll, 2200);
+window.addEventListener('beforeprint', revealAll);
+
+const header = document.getElementById('header');
+const onScroll = () => header.classList.toggle('is-stuck', window.scrollY > 10);
+onScroll();
+window.addEventListener('scroll', onScroll, { passive: true });
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-in');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach((el, index) => {
+  el.style.transitionDelay = `${Math.min(index % 4, 3) * 70}ms`;
+  io.observe(el);
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const burger = document.getElementById('burger');
+const nav = document.getElementById('nav');
+burger.addEventListener('click', () => {
+  const open = nav.classList.toggle('is-open');
+  burger.classList.toggle('is-open', open);
+  burger.setAttribute('aria-expanded', String(open));
+});
+nav.querySelectorAll('a').forEach((link) => {
+  link.addEventListener('click', () => {
+    nav.classList.remove('is-open');
+    burger.classList.remove('is-open');
+    burger.setAttribute('aria-expanded', 'false');
+  });
+});
+
+document.querySelectorAll('.dish__add').forEach((button) => {
+  button.addEventListener('click', () => {
+    button.textContent = 'В заказе';
+    button.style.background = '#cfe3c6';
+    setTimeout(() => {
+      button.textContent = 'Хочу';
+      button.style.background = '';
+    }, 1500);
+  });
+});
+
+const phoneInput = document.getElementById('phone');
+phoneInput.addEventListener('input', () => {
+  const digits = phoneInput.value.replace(/\D/g, '').slice(0, 11);
+  let out = '';
+  if (digits.length) out = '+7';
+  if (digits.length > 1) out += ` (${digits.slice(1, 4)}`;
+  if (digits.length >= 5) out += `) ${digits.slice(4, 7)}`;
+  if (digits.length >= 8) out += `-${digits.slice(7, 9)}`;
+  if (digits.length >= 10) out += `-${digits.slice(9, 11)}`;
+  phoneInput.value = out;
+});
+
+const bookBtn = document.getElementById('bookBtn');
+const bookHint = document.getElementById('bookHint');
+bookBtn.addEventListener('click', () => {
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const guests = document.getElementById('guests').value;
+  const time = document.getElementById('time').value;
+  if (name.length < 2 || phone.replace(/\D/g, '').length < 11) {
+    bookHint.className = 'hint';
+    bookHint.innerHTML = 'Заполните имя и телефон — <b>иначе мы не сможем подтвердить бронь</b>.';
+    return;
+  }
+  bookHint.className = 'hint hint--ok';
+  bookHint.innerHTML = `${name}, столик на ${guests} в ${time} записан. Демо-режим: заявка не уходит на сервер — подтвердите по телефону <b>+7 495 212-16-63</b>.`;
+  bookBtn.textContent = 'Бронь отправлена';
+  bookBtn.disabled = true;
+  bookBtn.style.opacity = '0.75';
+});
+</script>
+</body>
+</html>
