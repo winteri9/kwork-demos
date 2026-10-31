@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Натура — свежий кофе и здоровая еда</title>
+<meta name="description" content="Кофейня «Натура»: свежий кофе, боулы и десерты без сахара. 2-я Звенигородская ул, 12 ст23. Бронирование столиков.">
+<meta name="theme-color" content="#fbfbf8">
+<style>
+:root{
+  --white:#ffffff;
+  --paper:#fbfbf8;
+  --paper-2:#f6f7f2;
+  --line:#e5e8e0;
+  --line-soft:#eef0ea;
+  --ink:#1c2620;
+  --ink-soft:#4a564d;
+  --muted:#7d8a80;
+  --green:#2f6b4f;
+  --green-deep:#22503a;
+  --green-soft:#eaf1e9;
+  --wood:#d6c0a2;
+  --wood-soft:#f4ede2;
+  --r:18px;
+  --sans:"Segoe UI","Inter",system-ui,-apple-system,Roboto,Arial,sans-serif;
+  --serif:"Georgia","Times New Roman",serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+.wrap{width:min(1180px,calc(100% - 56px));margin-inline:auto}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(251,251,248,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s ease;
+}
+.header.is-stuck{border-bottom-color:var(--line)}
+.header__inner{display:flex;align-items:center;justify-content:space-between;gap:28px;padding:20px 0}
+.logo{display:flex;align-items:baseline;gap:12px}
+.logo__word{font-size:23px;font-weight:600;letter-spacing:-.02em}
+.logo__dot{width:7px;height:7px;border-radius:50%;background:var(--green);transform:translateY(-2px)}
+.logo__tag{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.nav{display:flex;align-items:center;gap:34px}
+.nav a{font-size:14px;color:var(--ink-soft);position:relative;padding:4px 0;transition:color .2s ease}
+.nav a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--green);transition:width .25s ease}
+.nav a:hover{color:var(--ink)}
+.nav a:hover::after{width:100%}
+.header__right{display:flex;align-items:center;gap:22px}
+.header__phone{font-size:14.5px;font-weight:600;white-space:nowrap}
+.header__phone span{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:400}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:15px 30px;
+  border-radius:999px;
+  border:1px solid transparent;
+  font-size:13.5px;
+  font-weight:600;
+  letter-spacing:.02em;
+  cursor:pointer;
+  transition:background .2s ease,color .2s ease,border-color .2s ease,transform .18s ease;
+}
+.btn--green{background:var(--green);color:#fbfdf9}
+.btn--green:hover{background:var(--green-deep);transform:translateY(-2px)}
+.btn--ghost{border-color:var(--line);color:var(--ink);background:transparent}
+.btn--ghost:hover{border-color:var(--green);color:var(--green)}
+.btn--sm{padding:11px 20px;font-size:12.5px}
+
+.hero{padding:82px 0 96px;position:relative}
+.hero__grid{display:grid;grid-template-columns:1.12fr .88fr;gap:70px;align-items:center}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--green);
+  font-weight:600;
+}
+.eyebrow i{width:28px;height:1px;background:var(--green);display:block}
+h1{
+  font-size:clamp(56px,9vw,116px);
+  line-height:.92;
+  font-weight:300;
+  letter-spacing:-.045em;
+  margin:26px 0 0;
+}
+h1 b{font-weight:600}
+.hero__slogan{
+  margin-top:20px;
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:clamp(19px,2.4vw,26px);
+  color:var(--green-deep);
+  letter-spacing:.01em;
+}
+.hero__lead{max-width:46ch;margin-top:18px;color:var(--ink-soft);font-size:16.5px}
+.hero__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.hero__meta{
+  display:flex;flex-wrap:wrap;gap:0;
+  margin-top:52px;
+  border-top:1px solid var(--line);
+  padding-top:22px;
+}
+.hero__meta div{
+  padding-right:32px;
+  margin-right:32px;
+  border-right:1px solid var(--line);
+}
+.hero__meta div:last-child{border-right:0;margin-right:0;padding-right:0}
+.hero__meta b{display:block;font-size:15px;font-weight:600}
+.hero__meta small{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+.art{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:26px;
+  background:var(--white);
+  padding:30px;
+}
+.art__inner{
+  border-radius:16px;
+  background:var(--green-soft);
+  padding:22px;
+  display:grid;
+  place-items:center;
+}
+.art__cap{
+  margin-top:16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  font-size:12.5px;
+  color:var(--muted);
+}
+.art__cap b{color:var(--green);font-weight:600}
+.art__badge{
+  position:absolute;
+  top:-14px;
+  right:22px;
+  background:var(--wood-soft);
+  border:1px solid var(--wood);
+  color:#7a5f3e;
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:7px 14px;
+  border-radius:999px;
+}
+
+.section{padding:96px 0}
+.section--paper{background:var(--paper-2)}
+.section--white{background:var(--white)}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:46px;flex-wrap:wrap}
+.head h2{font-size:clamp(28px,3.6vw,44px);font-weight:300;letter-spacing:-.03em;line-height:1.1}
+.head h2 b{font-weight:600}
+.head p{max-width:44ch;color:var(--ink-soft);font-size:15.5px}
+
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:0 64px}
+.item{
+  padding:26px 0;
+  border-top:1px solid var(--line);
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px 24px;
+  align-items:start;
+}
+.item__tag{
+  grid-column:1 / -1;
+  font-size:10.5px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--green);
+  font-weight:600;
+}
+.item h3{font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
+.item p{grid-column:1;font-size:14px;color:var(--muted);line-height:1.6}
+.item__price{grid-row:2 / span 2;grid-column:2;font-size:19px;font-weight:600;white-space:nowrap;color:var(--ink);padding-top:2px}
+.item:hover h3{color:var(--green)}
+
+.note{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-top:34px;
+  padding:18px 22px;
+  border:1px dashed var(--wood);
+  border-radius:14px;
+  background:var(--wood-soft);
+  font-size:13.5px;
+  color:#6d5636;
+}
+.note b{color:#4f3d24}
+
+.booking{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:26px;background:var(--white);overflow:hidden}
+.booking__left{padding:52px 46px}
+.booking__left h2{font-size:clamp(28px,3.4vw,40px);font-weight:300;letter-spacing:-.03em;line-height:1.08}
+.booking__left h2 b{font-weight:600}
+.booking__left > p{margin-top:16px;color:var(--ink-soft);max-width:36ch;font-size:15.5px}
+.booking__list{margin-top:28px;display:grid;gap:14px}
+.booking__list div{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;color:var(--ink-soft)}
+.booking__list span{color:var(--green);font-weight:700;line-height:1.4}
+.booking__right{padding:52px 44px;border-left:1px solid var(--line);background:var(--paper);display:grid;align-content:center;gap:18px}
+.field{display:grid;gap:8px}
+.field label{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.field input,.field select{
+  width:100%;
+  padding:12px 0;
+  border:0;
+  border-bottom:1px solid var(--line);
+  background:transparent;
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  outline:none;
+  border-radius:0;
+  transition:border-color .2s ease;
+}
+.field input::placeholder{color:#b3bdb4}
+.field input:focus,.field select:focus{border-bottom-color:var(--green)}
+.field--row{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.hint{font-size:12.5px;color:var(--muted);line-height:1.6}
+.hint b{color:var(--green-deep)}
+.hint--ok{background:var(--green-soft);border-radius:12px;padding:13px 15px;color:var(--green-deep);border:1px solid #d5e3d3}
+
+.footer{border-top:1px solid var(--line);padding:54px 0 34px}
+.footer__grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:34px}
+.footer h4{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:600}
+.footer p,.footer a{font-size:14.5px;line-height:1.95;color:var(--ink-soft)}
+.footer a:hover{color:var(--green)}
+.footer__bottom{margin-top:44px;padding-top:20px;border-top:1px solid var(--line-soft);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
+.reveal.is-in{opacity:1;transform:none}
+@media print{.reveal{opacity:1 !important;transform:none !important}}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+.burger{display:none;width:44px;height:44px;border:1px solid var(--line);border-radius:12px;background:transparent;cursor:pointer;padding:12px}
+.burger span{display:block;height:1.5px;background:var(--ink);margin:5px 0;transition:transform .2s ease,opacity .2s ease}
+.burger.is-open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.burger.is-open span:nth-child(2){opacity:0}
+.burger.is-open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+@media (max-width:1000px){
+  .hero{padding:48px 0 64px}
+  .hero__grid{grid-template-columns:1fr;gap:44px}
+  .menu{grid-template-columns:1fr;gap:0}
+  .booking{grid-template-columns:1fr}
+  .booking__right{border-left:0;border-top:1px solid var(--line)}
+  .footer__grid{grid-template-columns:1fr 1fr}
+  .nav{
+    position:absolute;top:100%;left:0;right:0;
+    display:none;flex-direction:column;align-items:flex-start;gap:0;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    padding:8px 28px 20px;
+  }
+  .nav.is-open{display:flex}
+  .nav a{width:100%;padding:13px 0;border-bottom:1px solid var(--line-soft);font-size:15px}
+  .nav a::after{display:none}
+  .burger{display:block}
+  .header__phone{display:none}
+  .section{padding:68px 0}
+  .booking__left{padding:34px 26px}
+  .booking__right{padding:32px 26px}
+}
+@media (max-width:620px){
+  .wrap{width:calc(100% - 32px)}
+  .art{padding:18px;border-radius:20px}
+  .art__inner{padding:14px}
+  .art__badge{top:-12px;right:12px;font-size:10px;padding:6px 11px}
+  .hero__meta{gap:0}
+  .hero__meta div{padding-right:18px;margin-right:18px}
+  .hero__meta small{font-size:10.5px}
+  .btn{width:100%}
+  .hero__actions{gap:10px}
+  .header__right .btn{display:none}
+  .logo__tag{display:none}
+  .field--row{grid-template-columns:1fr;gap:18px}
+  .footer__grid{grid-template-columns:1fr}
+  .head{margin-bottom:30px}
+}
+</style>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="wrap header__inner">
+    <a class="logo" href="#top">
+      <span class="logo__word">Натура</span>
+      <span class="logo__dot"></span>
+      <span class="logo__tag">кофейня</span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#menu">Меню</a>
+      <a href="#booking">Бронирование</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <div class="header__right">
+      <a class="header__phone" href="tel:+79777444977">
+        <span>Каждый день с 8:00</span>
+        +7 (977) 744-49-77
+      </a>
+      <a class="btn btn--green btn--sm" href="#booking">Забронировать</a>
+      <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div>
+        <span class="eyebrow"><i></i>2-я Звенигородская, 12 ст23</span>
+        <h1>На<b>тура</b></h1>
+        <div class="hero__slogan">Свежий кофе и здоровая еда</div>
+        <p class="hero__lead">
+          Спешелти-кофе, зелёные боулы и десерты без добавленного сахара.
+          Продукты привозят трижды в неделю, меню меняется вместе с сезоном.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--green" href="#booking">Забронировать столик</a>
+          <a class="btn btn--ghost" href="#menu">Смотреть меню</a>
+        </div>
+        <div class="hero__meta">
+          <div><b>8:00 — 21:00</b><small>каждый день</small></div>
+          <div><b>26 мест</b><small>и терраса летом</small></div>
+          <div><b>Plant-based</b><small>половина меню</small></div>
+        </div>
+      </div>
+      <div class="art">
+        <span class="art__badge">single origin</span>
+        <div class="art__inner">
+          <svg viewBox="0 0 320 300" fill="none" role="img" aria-label="Чашка кофе и ветка зелени">
+            <ellipse cx="160" cy="252" rx="96" ry="10" fill="#dbe7d9"/>
+            <path d="M92 118h136v56a54 54 0 0 1-54 54h-28a54 54 0 0 1-54-54v-56Z" stroke="#2f6b4f" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M228 132h12a26 26 0 0 1 0 52h-12" stroke="#2f6b4f" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M112 118c0-10 10-10 10-20M148 118c0-10 10-10 10-20M184 118c0-10 10-10 10-20" stroke="#7ba383" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M60 60c26-10 44 4 50 22-22 8-42-2-50-22Z" stroke="#7ba383" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M262 74c-18-8-32 2-38 16 16 7 31 1 38-16Z" stroke="#7ba383" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M110 82c14-14 30-6 36 6-14 8-28 4-36-6Z" stroke="#a8c0a4" stroke-width="2" stroke-linejoin="round"/>
+            <circle cx="160" cy="176" r="26" fill="#eaf1e9"/>
+            <path d="M148 176c6-10 18-10 24 0-6 10-18 10-24 0Z" fill="#c2d6bd"/>
+          </svg>
+        </div>
+        <div class="art__cap">
+          <span>Обжарка <b>в Москве</b>, зерно — Эфиопия и Колумбия</span>
+          <span>Зерно на вынос — 250 г</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--white" id="menu">
+    <div class="wrap">
+      <div class="head reveal">
+        <div>
+          <h2>Меню <b>этого сезона</b></h2>
+        </div>
+        <p>Четыре позиции, которые заказывают каждый день. Полное меню — на стойке, оно меняется раз в две недели.</p>
+      </div>
+      <div class="menu">
+        <article class="item reveal">
+          <span class="item__tag">Кофе</span>
+          <h3>Фильтр V60</h3>
+          <p>Эфиопия, светлая обжарка. Ноты абрикоса, белого чая и мёда.</p>
+          <div class="item__price">260 ₽</div>
+        </article>
+        <article class="item reveal">
+          <span class="item__tag">Кофе</span>
+          <h3>Флэт уайт</h3>
+          <p>Двойной эспрессо и молоко 3,2%. Можно на овсяном или кокосовом.</p>
+          <div class="item__price">280 ₽</div>
+        </article>
+        <article class="item reveal">
+          <span class="item__tag">Боул</span>
+          <h3>Боул с киноа и авокадо</h3>
+          <p>Киноа, авокадо, шпинат, печёная тыква и соус тахини.</p>
+          <div class="item__price">590 ₽</div>
+        </article>
+        <article class="item reveal">
+          <span class="item__tag">Десерт</span>
+          <h3>Чиа-пудинг с манго</h3>
+          <p>Семена чиа на кокосовом молоке, манго и кокосовая стружка. Без сахара.</p>
+          <div class="item__price">320 ₽</div>
+        </article>
+      </div>
+      <div class="note reveal">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="10" cy="10" r="9" stroke="#a8875c" stroke-width="1.5"/>
+          <path d="M10 14V9M10 6.4v.2" stroke="#a8875c" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <span>Каждую субботу <b>−20% на боулы</b> с 8:00 до 11:00 — чтобы разгрузить витрину перед новой поставкой.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="booking">
+    <div class="wrap">
+      <div class="booking reveal">
+        <div class="booking__left">
+          <h2>Забронировать <b>столик</b></h2>
+          <p>Оставьте заявку — перезвоним в течение десяти минут. У окна четыре стола, их разбирают первыми.</p>
+          <div class="booking__list">
+            <div><span>—</span>Столы на 2, 4 и 6 человек</div>
+            <div><span>—</span>Бронь держим 20 минут</div>
+            <div><span>—</span>Большие компании — по телефону</div>
+          </div>
+        </div>
+        <div class="booking__right">
+          <div class="field">
+            <label for="name">Имя</label>
+            <input id="name" type="text" placeholder="Как к вам обращаться" autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="phone">Телефон</label>
+            <input id="phone" type="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel">
+          </div>
+          <div class="field--row">
+            <div class="field">
+              <label for="guests">Гостей</label>
+              <select id="guests">
+                <option>2 гостя</option>
+                <option>3 гостя</option>
+                <option selected>4 гостя</option>
+                <option>6 гостей</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="time">Время</label>
+              <select id="time">
+                <option>08:30</option>
+                <option selected>10:00</option>
+                <option>13:00</option>
+                <option>16:00</option>
+                <option>19:00</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn--green" id="bookBtn" type="button">Забронировать столик</button>
+          <p class="hint" id="bookHint">Демо-режим: заявка не уходит на сервер. Чтобы забронировать по-настоящему, позвоните — <b>+7 (977) 744-49-77</b>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="contacts">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <a class="logo" href="#top">
+          <span class="logo__word">Натура</span>
+          <span class="logo__dot"></span>
+        </a>
+        <p style="margin-top:14px">Кофейня с сезонным меню.<br>Спешелти-кофе, боулы, десерты без сахара.</p>
+      </div>
+      <div>
+        <h4>Адрес</h4>
+        <p>2-я Звенигородская ул, 12 ст23</p>
+        <p>Москва, 123022</p>
+        <p>вход со двора</p>
+      </div>
+      <div>
+        <h4>Связь</h4>
+        <p><a href="tel:+79777444977">+7 (977) 744-49-77</a></p>
+        <p><a href="mailto:hello@natura-cafe.ru">hello@natura-cafe.ru</a></p>
+      </div>
+      <div>
+        <h4>Часы</h4>
+        <p>Пн — Пт 08:00 — 21:00</p>
+        <p>Сб — Вс 09:00 — 21:00</p>
+        <p>Кухня до 20:30</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© <span id="year">2026</span> Натура. Демонстрационный проект.</span>
+      <span>Сделано на чистом HTML, CSS и JavaScript</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const revealAll = () => document.querySelectorAll('.reveal:not(.is-in)').forEach((el) => el.classList.add('is-in'));
+setTimeout(revealAll, 2200);
+window.addEventListener('beforeprint', revealAll);
+
+const header = document.getElementById('header');
+const onScroll = () => header.classList.toggle('is-stuck', window.scrollY > 8);
+onScroll();
+window.addEventListener('scroll', onScroll, { passive: true });
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-in');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach((el, index) => {
+  el.style.transitionDelay = `${Math.min(index % 4, 3) * 70}ms`;
+  io.observe(el);
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const burger = document.getElementById('burger');
+const nav = document.getElementById('nav');
+burger.addEventListener('click', () => {
+  const open = nav.classList.toggle('is-open');
+  burger.classList.toggle('is-open', open);
+  burger.setAttribute('aria-expanded', String(open));
+});
+nav.querySelectorAll('a').forEach((link) => {
+  link.addEventListener('click', () => {
+    nav.classList.remove('is-open');
+    burger.classList.remove('is-open');
+    burger.setAttribute('aria-expanded', 'false');
+  });
+});
+
+const phoneInput = document.getElementById('phone');
+phoneInput.addEventListener('input', () => {
+  const digits = phoneInput.value.replace(/\D/g, '').slice(0, 11);
+  let out = '';
+  if (digits.length) out = '+7';
+  if (digits.length > 1) out += ` (${digits.slice(1, 4)}`;
+  if (digits.length >= 5) out += `) ${digits.slice(4, 7)}`;
+  if (digits.length >= 8) out += `-${digits.slice(7, 9)}`;
+  if (digits.length >= 10) out += `-${digits.slice(9, 11)}`;
+  phoneInput.value = out;
+});
+
+const bookBtn = document.getElementById('bookBtn');
+const bookHint = document.getElementById('bookHint');
+bookBtn.addEventListener('click', () => {
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const guests = document.getElementById('guests').value;
+  const time = document.getElementById('time').value;
+  if (name.length < 2 || phone.replace(/\D/g, '').length < 11) {
+    bookHint.className = 'hint';
+    bookHint.innerHTML = 'Заполните имя и телефон — <b>иначе мы не сможем подтвердить бронь</b>.';
+    return;
+  }
+  bookHint.className = 'hint hint--ok';
+  bookHint.innerHTML = `${name}, столик на ${guests} в ${time} записан. Демо-режим: заявка не уходит на сервер — подтвердите по телефону <b>+7 (977) 744-49-77</b>.`;
+  bookBtn.textContent = 'Бронь отправлена';
+  bookBtn.disabled = true;
+  bookBtn.style.opacity = '0.7';
+});
+</script>
+</body>
+</html>
