@@ -350,6 +350,40 @@ h1 span{display:block;color:var(--pumpkin)}
 .drawer__total b{font-family:var(--serif);font-size:24px;color:var(--pumpkin-deep)}
 .drawer__note{font-size:12px;color:var(--brown-soft);margin-top:10px;line-height:1.55}
 .drawer__note b{color:var(--pumpkin-deep)}
+.drawer__form{display:grid;gap:11px;padding:2px 0 16px}
+.mini-field{display:grid;gap:6px}
+.mini-field label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--brown-soft)}
+.mini-field input{
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:var(--cream);
+  color:var(--brown);
+  font-family:var(--sans);
+  font-size:14.5px;
+  outline:none;
+  transition:border-color .18s ease,background .18s ease,box-shadow .18s ease;
+}
+.mini-field input::placeholder{color:#c0aa8e}
+.mini-field input:focus{border-color:var(--pumpkin);background:#fff;box-shadow:0 0 0 3px rgba(217,118,47,.15)}
+.mini-field input:disabled{opacity:.75;background:var(--cream-2)}
+.mini-field.is-error input{border-color:#c0392b;background:#fdeeeb;box-shadow:0 0 0 3px rgba(192,57,43,.13);animation:shake .3s ease}
+.mini-field.is-error label{color:#c0392b}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.drawer__note.is-success{
+  display:flex;
+  gap:11px;
+  align-items:flex-start;
+  background:linear-gradient(150deg,#fdf1e1,#f7dfc2);
+  border:1px solid #e9c7a1;
+  border-radius:14px;
+  padding:14px 15px;
+  font-size:13px;
+  color:var(--brown);
+}
+.drawer__note.is-success b{color:var(--pumpkin-deep)}
+.okmark{flex:none;width:24px;height:24px;border-radius:50%;background:var(--pumpkin);color:#fff7ee;display:grid;place-items:center;font-size:13px;font-weight:700;margin-top:1px}
 
 .toast{
   position:fixed;
@@ -759,6 +793,16 @@ h1 span{display:block;color:var(--pumpkin)}
     </div>
     <div class="drawer__list" id="cartList"></div>
     <div class="drawer__total"><span>Итого</span><b id="cartTotal">0 ₽</b></div>
+    <div class="drawer__form">
+      <div class="mini-field" id="fieldName">
+        <label for="cartName">Имя</label>
+        <input id="cartName" type="text" placeholder="Как вас зовут" autocomplete="name">
+      </div>
+      <div class="mini-field" id="fieldPhone">
+        <label for="cartPhone">Телефон</label>
+        <input id="cartPhone" type="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel">
+      </div>
+    </div>
     <button class="btn btn--pumpkin" id="checkoutBtn" type="button">Оформить заказ</button>
     <p class="drawer__note" id="checkoutNote">Демо-режим: заказ не уходит на сервер. Позвоните — <b>+7 (985) 366-00-04</b>, и мы начнём готовить.</p>
   </aside>
@@ -817,6 +861,11 @@ const checkoutNote = document.getElementById('checkoutNote');
 const checkoutBtn = document.getElementById('checkoutBtn');
 const bigCount = document.getElementById('bigCount');
 const bigSum = document.getElementById('bigSum');
+const cartName = document.getElementById('cartName');
+const cartPhone = document.getElementById('cartPhone');
+const fieldName = document.getElementById('fieldName');
+const fieldPhone = document.getElementById('fieldPhone');
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 const totals = () => {
   let count = 0;
@@ -875,6 +924,7 @@ document.querySelectorAll('[data-name]').forEach((button) => {
   button.addEventListener('click', () => {
     const name = button.dataset.name;
     const price = Number(button.dataset.price);
+    resetCheckout();
     const item = cart.get(name) || { price, qty: 0 };
     item.qty += 1;
     cart.set(name, item);
@@ -909,13 +959,65 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') closeDrawer();
 });
 
+const resetCheckout = () => {
+  checkoutBtn.textContent = 'Оформить заказ';
+  checkoutBtn.disabled = false;
+  checkoutBtn.style.opacity = '';
+  cartName.disabled = false;
+  cartPhone.disabled = false;
+  checkoutNote.className = 'drawer__note';
+  checkoutNote.innerHTML = 'Демо-режим: заказ не уходит на сервер. Позвоните — <b>+7 (985) 366-00-04</b>, и мы начнём готовить.';
+};
+
+cartPhone.addEventListener('input', () => {
+  let digits = cartPhone.value.replace(/\D/g, '');
+  if (digits.startsWith('7') || digits.startsWith('8')) digits = digits.slice(1);
+  digits = digits.slice(0, 10);
+  let out = '';
+  if (digits.length) {
+    out = '+7';
+    if (digits.length <= 3) out += ` (${digits}`;
+    else if (digits.length <= 6) out += ` (${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    else if (digits.length <= 8) out += ` (${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+    else out += ` (${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 8)}-${digits.slice(8)}`;
+  }
+  cartPhone.value = out;
+});
+
+[cartName, cartPhone].forEach((input) => {
+  input.addEventListener('input', () => input.closest('.mini-field').classList.remove('is-error'));
+});
+
 checkoutBtn.addEventListener('click', () => {
   const { count, sum } = totals();
+  const name = cartName.value.trim();
+  const phone = cartPhone.value.trim();
+  const digits = phone.replace(/\D/g, '');
+  let invalid = false;
+  fieldName.classList.remove('is-error');
+  fieldPhone.classList.remove('is-error');
+  checkoutNote.className = 'drawer__note';
+  if (name.length < 2) {
+    fieldName.classList.add('is-error');
+    invalid = true;
+  }
+  if (digits.length < 11) {
+    fieldPhone.classList.add('is-error');
+    invalid = true;
+  }
+  if (invalid) {
+    checkoutNote.innerHTML = 'Заполните имя и телефон — <b>без них мы не сможем подтвердить заказ</b>.';
+    if (name.length < 2) cartName.focus(); else cartPhone.focus();
+    return;
+  }
   if (count === 0) {
     checkoutNote.innerHTML = 'В заказе пока ничего нет — <b>выберите напиток</b> в меню.';
     return;
   }
-  checkoutNote.innerHTML = `Заказ на ${sum} ₽ собран. Демо-режим: на сервер ничего не уходит — назовите имя на стойке или позвоните <b>+7 (985) 366-00-04</b>.`;
+  checkoutNote.className = 'drawer__note is-success';
+  checkoutNote.innerHTML = `<span class="okmark">✓</span><span>Спасибо, <b>${esc(name)}</b>! Ваш заказ на <b>${sum} руб.</b> принят. Мы позвоним вам на номер <b>${esc(phone)}</b> для подтверждения.</span>`;
+  cartName.disabled = true;
+  cartPhone.disabled = true;
   checkoutBtn.textContent = 'Заказ принят';
   checkoutBtn.disabled = true;
   checkoutBtn.style.opacity = '0.72';
