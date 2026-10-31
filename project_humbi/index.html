@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Humbi cookies — пекарня-кофейня на Тверском бульваре</title>
+<meta name="description" content="Humbi cookies: печенье с шоколадом и карамелью, свежая выпечка каждый час, кофе и доставка. Тверской бульвар, 27 ст6.">
+<meta name="theme-color" content="#fdf7ef">
+<style>
+:root{
+  --paper:#fdf7ef;
+  --paper-2:#fbf1e4;
+  --sand:#f7e7d2;
+  --sand-deep:#f0dbc0;
+  --card:#ffffff;
+  --caramel:#c1722f;
+  --caramel-light:#e9a95c;
+  --caramel-pale:#f6dfc2;
+  --choco:#3b271b;
+  --choco-soft:#7b5c47;
+  --line:#ecd9c0;
+  --ok:#5c7a4a;
+  --shadow:0 22px 50px -28px rgba(93,62,38,.45);
+  --shadow-soft:0 14px 34px -22px rgba(93,62,38,.4);
+  --display:"Bookman Old Style","Georgia","Times New Roman",serif;
+  --sans:"Segoe UI","Inter",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--choco);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:.35;
+  background-image:radial-gradient(rgba(193,114,47,.08) 1px,transparent 1px);
+  background-size:26px 26px;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+.wrap{width:min(1180px,calc(100% - 44px));margin-inline:auto;position:relative;z-index:1}
+
+.strip{
+  background:linear-gradient(90deg,var(--caramel),#d98a3f 55%,var(--caramel-light));
+  color:#fff8ef;
+  font-size:12.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  text-align:center;
+  padding:9px 16px;
+  position:relative;
+  z-index:60;
+}
+.strip span{opacity:.85}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(253,247,239,.86);
+  backdrop-filter:blur(14px) saturate(150%);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s ease,box-shadow .3s ease;
+}
+.header.is-stuck{border-bottom-color:var(--line);box-shadow:0 10px 30px -24px rgba(93,62,38,.55)}
+.header__inner{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:14px 0}
+.brand{display:flex;align-items:center;gap:12px}
+.brand__mark{width:44px;height:44px;flex:none}
+.brand__name{font-family:var(--display);font-size:25px;line-height:1;letter-spacing:.01em}
+.brand__name b{color:var(--caramel);font-weight:400}
+.brand__sub{display:block;font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--choco-soft);margin-top:6px}
+.nav{display:flex;align-items:center;gap:28px}
+.nav a{font-size:13px;letter-spacing:.05em;color:var(--choco-soft);position:relative;padding:4px 0;transition:color .2s ease}
+.nav a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;border-radius:2px;background:var(--caramel);transition:width .25s ease}
+.nav a:hover{color:var(--choco)}
+.nav a:hover::after{width:100%}
+.header__side{display:flex;align-items:center;gap:18px}
+.header__phone{font-weight:600;font-size:15px;white-space:nowrap}
+.header__phone small{display:block;font-weight:400;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--choco-soft)}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:16px 30px;
+  border-radius:999px;
+  border:1px solid transparent;
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:.02em;
+  cursor:pointer;
+  transition:transform .18s ease,box-shadow .25s ease,background .25s ease,color .25s ease,border-color .25s ease;
+}
+.btn--main{background:linear-gradient(135deg,var(--caramel),#a75d22);color:#fff8ef;box-shadow:0 16px 30px -16px rgba(167,93,34,.75)}
+.btn--main:hover{transform:translateY(-2px);box-shadow:0 22px 38px -16px rgba(167,93,34,.8)}
+.btn--soft{background:var(--caramel-pale);color:#8a4a17}
+.btn--soft:hover{background:#f1cf9f;transform:translateY(-2px)}
+.btn--line{border-color:var(--line);color:var(--choco);background:#fff}
+.btn--line:hover{border-color:var(--caramel);color:var(--caramel);transform:translateY(-2px)}
+.btn--sm{padding:12px 22px;font-size:13px}
+
+.hero{position:relative;padding:74px 0 86px;overflow:hidden}
+.hero__blob{
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+  filter:blur(10px);
+}
+.hero__blob--one{width:620px;height:620px;right:-180px;top:-180px;background:radial-gradient(circle,rgba(233,169,92,.32),rgba(233,169,92,0) 68%)}
+.hero__blob--two{width:460px;height:460px;left:-220px;bottom:-220px;background:radial-gradient(circle,rgba(193,114,47,.18),rgba(193,114,47,0) 70%)}
+.hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:var(--sand);
+  color:#8a4a17;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:8px 16px;
+  font-size:11.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-weight:600;
+}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--caramel);display:block;animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.8)}}
+h1{
+  font-family:var(--display);
+  font-weight:400;
+  font-size:clamp(38px,5.2vw,62px);
+  line-height:1.04;
+  letter-spacing:-.015em;
+  margin-top:22px;
+}
+h1 span{position:relative;white-space:nowrap}
+h1 span::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:.06em;
+  height:.22em;
+  border-radius:8px;
+  background:linear-gradient(90deg,rgba(233,169,92,.55),rgba(233,169,92,.18));
+  z-index:-1;
+}
+.hero__lead{max-width:46ch;margin-top:22px;font-size:17.5px;color:var(--choco-soft)}
+.hero__lead strong{color:var(--choco)}
+.hero__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.hero__facts{display:flex;gap:34px;flex-wrap:wrap;margin-top:44px;padding-top:26px;border-top:1px dashed var(--line)}
+.hero__facts div{min-width:96px}
+.hero__facts b{display:block;font-family:var(--display);font-size:27px;line-height:1.1;color:var(--caramel)}
+.hero__facts small{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--choco-soft)}
+
+.plate{
+  position:relative;
+  background:linear-gradient(160deg,#fffdfa,var(--sand));
+  border:1px solid var(--line);
+  border-radius:32px;
+  padding:34px;
+  box-shadow:var(--shadow);
+}
+.plate__grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.plate__cell{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:14px;
+  display:grid;
+  place-items:center;
+  transition:transform .25s ease,box-shadow .25s ease;
+}
+.plate__cell:hover{transform:translateY(-4px);box-shadow:var(--shadow-soft)}
+.plate__cell svg{width:100%;height:auto}
+.plate__cell--promo{
+  background:linear-gradient(155deg,var(--caramel),#a75d22);
+  border-color:transparent;
+  color:#fff8ef;
+  display:grid;
+  align-content:center;
+  justify-items:start;
+  gap:6px;
+  padding:20px;
+  text-align:left;
+}
+.plate__cell--promo small{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+.plate__cell--promo b{font-family:var(--display);font-size:30px;line-height:1;font-weight:400}
+.plate__cell--promo span{font-size:12.5px;opacity:.9}
+.plate__note{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:18px;
+  padding:14px 16px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  font-size:13.5px;
+  color:var(--choco-soft);
+}
+.plate__note b{color:var(--choco)}
+.plate__dot{width:9px;height:9px;border-radius:50%;background:var(--ok);flex:none;box-shadow:0 0 0 4px rgba(92,122,74,.14)}
+
+.section{padding:84px 0;position:relative;z-index:1}
+.section--sand{background:linear-gradient(180deg,var(--paper),var(--paper-2) 12%,var(--paper-2) 88%,var(--paper))}
+.section--sand2{background:var(--sand)}
+.head{max-width:640px;margin-bottom:44px}
+.head h2{font-family:var(--display);font-weight:400;font-size:clamp(32px,4.4vw,48px);line-height:1.1}
+.head p{margin-top:14px;color:var(--choco-soft);font-size:16px}
+
+.cookies{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.cookie{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:22px 22px 26px;
+  box-shadow:var(--shadow-soft);
+  transition:transform .28s ease,box-shadow .28s ease;
+  position:relative;
+  overflow:hidden;
+}
+.cookie:hover{transform:translateY(-6px);box-shadow:0 26px 46px -26px rgba(93,62,38,.5)}
+.cookie__art{
+  background:linear-gradient(160deg,var(--sand),#f9eddd);
+  border-radius:18px;
+  padding:16px;
+  display:grid;
+  place-items:center;
+  margin-bottom:20px;
+}
+.cookie__art svg{width:min(190px,80%)}
+.cookie__label{
+  position:absolute;
+  top:16px;left:16px;
+  background:#fff;
+  border:1px solid var(--line);
+  color:#8a4a17;
+  font-size:10.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font-weight:700;
+  padding:5px 11px;
+  border-radius:999px;
+}
+.cookie h3{font-family:var(--display);font-weight:400;font-size:24px;line-height:1.2}
+.cookie p{font-size:14px;color:var(--choco-soft);margin-top:8px;min-height:66px}
+.cookie__row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;padding-top:16px;border-top:1px dashed var(--line)}
+.cookie__price{font-family:var(--display);font-size:23px;color:var(--caramel)}
+.cookie__price small{font-family:var(--sans);font-size:11.5px;color:var(--choco-soft);margin-left:4px}
+.cookie__add{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid var(--line);
+  background:var(--paper);
+  border-radius:999px;
+  padding:9px 16px;
+  font-size:12.5px;
+  font-weight:700;
+  color:#8a4a17;
+  cursor:pointer;
+  transition:background .2s ease,border-color .2s ease,transform .18s ease;
+}
+.cookie__add:hover{background:var(--caramel-pale);border-color:#e2b681;transform:translateY(-1px)}
+
+.coffee{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px 26px;
+  margin-top:8px;
+}
+.coffee__row{
+  display:flex;
+  align-items:baseline;
+  gap:12px;
+  padding:14px 0;
+  border-bottom:1px dashed var(--line);
+}
+.coffee__name{font-weight:600;font-size:16px;white-space:nowrap}
+.coffee__desc{font-size:13.5px;color:var(--choco-soft);flex:0 1 auto}
+.coffee__dots{flex:1;border-bottom:1px dotted #dcc3a4;transform:translateY(-4px);min-width:14px}
+.coffee__price{font-family:var(--display);font-size:20px;color:var(--caramel);white-space:nowrap}
+
+.delivery{
+  display:grid;
+  grid-template-columns:1.02fr .98fr;
+  border-radius:30px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:linear-gradient(155deg,#fffdf9,var(--sand));
+  box-shadow:var(--shadow);
+}
+.delivery__left{padding:48px 46px}
+.delivery__left h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,4vw,44px);line-height:1.08}
+.delivery__left > p{margin-top:16px;color:var(--choco-soft);max-width:40ch}
+.steps{display:grid;gap:14px;margin-top:28px}
+.step{display:flex;gap:14px;align-items:flex-start}
+.step__num{
+  width:30px;height:30px;flex:none;
+  border-radius:50%;
+  background:#fff;
+  border:1px solid var(--line);
+  display:grid;place-items:center;
+  font-size:13px;font-weight:700;color:var(--caramel);
+}
+.step p{font-size:14.5px;color:var(--choco-soft)}
+.step b{display:block;font-size:15px;color:var(--choco)}
+.delivery__right{padding:44px 40px;background:#fff;border-left:1px solid var(--line);display:grid;align-content:center;gap:14px}
+.field{display:grid;gap:7px}
+.field label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--choco-soft);font-weight:700}
+.field input,.field select,.field textarea{
+  width:100%;
+  padding:13px 15px;
+  border-radius:13px;
+  border:1px solid var(--line);
+  background:var(--paper);
+  color:var(--choco);
+  font-family:var(--sans);
+  font-size:15px;
+  outline:none;
+  transition:border-color .2s ease,background .2s ease;
+}
+.field textarea{resize:vertical;min-height:64px}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--caramel);background:#fff}
+.hint{font-size:12.5px;color:var(--choco-soft);line-height:1.55}
+.hint b{color:var(--caramel)}
+.total{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--sand);
+  border:1px dashed #e0c39d;
+  border-radius:13px;
+  padding:12px 15px;
+  font-size:14px;
+}
+.total b{font-family:var(--display);font-size:20px;color:var(--caramel)}
+
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.review{background:#fff;border:1px solid var(--line);border-radius:22px;padding:26px;box-shadow:var(--shadow-soft)}
+.review__stars{color:var(--caramel);letter-spacing:3px;font-size:15px}
+.review p{margin-top:12px;font-size:14.5px;color:var(--choco-soft)}
+.review b{display:block;margin-top:16px;font-size:13.5px;color:var(--choco)}
+
+.footer{background:var(--sand);border-top:1px solid var(--line);padding:52px 0 34px}
+.footer__grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}
+.footer h4{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--choco-soft);margin-bottom:14px}
+.footer p,.footer a{font-size:14.5px;line-height:1.95}
+.footer a:hover{color:var(--caramel)}
+.footer__bottom{margin-top:36px;padding-top:20px;border-top:1px solid #e6d0b4;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--choco-soft)}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+.reveal.is-in{opacity:1;transform:none}
+@media print{.reveal{opacity:1 !important;transform:none !important}}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .eyebrow i{animation:none}
+  html{scroll-behavior:auto}
+}
+
+.burger{display:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:#fff;cursor:pointer;padding:12px}
+.burger span{display:block;height:2px;border-radius:2px;background:var(--choco);margin:4px 0;transition:transform .2s ease,opacity .2s ease}
+.burger.is-open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.burger.is-open span:nth-child(2){opacity:0}
+.burger.is-open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+@media (max-width:1000px){
+  .hero__grid{grid-template-columns:1fr;gap:42px}
+  .hero{padding:52px 0 66px}
+  .cookies{grid-template-columns:1fr 1fr}
+  .coffee{grid-template-columns:1fr}
+  .delivery{grid-template-columns:1fr}
+  .delivery__right{border-left:0;border-top:1px solid var(--line)}
+  .reviews{grid-template-columns:1fr}
+  .footer__grid{grid-template-columns:1fr 1fr}
+  .nav{
+    position:absolute;
+    top:100%;left:0;right:0;
+    display:none;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:2px;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    padding:14px 22px 22px;
+    box-shadow:var(--shadow-soft);
+  }
+  .nav.is-open{display:flex}
+  .nav a{width:100%;padding:11px 0;border-bottom:1px dashed var(--line);font-size:15px}
+  .nav a::after{display:none}
+  .burger{display:block}
+  .header__phone{display:none}
+  .section{padding:64px 0}
+  .delivery__left{padding:36px 26px}
+  .delivery__right{padding:30px 24px}
+}
+@media (max-width:640px){
+  .wrap{width:calc(100% - 32px)}
+  .cookies{grid-template-columns:1fr}
+  .cookie p{min-height:0}
+  .plate{padding:22px;border-radius:24px}
+  .plate__grid{gap:12px}
+  .hero__facts{gap:22px}
+  .btn{width:100%}
+  .hero__actions{gap:10px}
+  .strip{font-size:10.5px;letter-spacing:.1em}
+  .brand__name{font-size:21px}
+  .plate__note{font-size:12.5px}
+  .footer__grid{grid-template-columns:1fr}
+  .header__side .btn{display:none}
+  .brand__name{white-space:nowrap}
+  .strip{padding:8px 12px}
+}
+</style>
+</head>
+<body>
+
+<div class="strip">
+  Свежая партия каждый час · доставка по Тверскому району за 40 минут
+</div>
+
+<header class="header" id="header">
+  <div class="wrap header__inner">
+    <a class="brand" href="#top">
+      <svg class="brand__mark" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="21" fill="#e9a95c"/>
+        <circle cx="24" cy="24" r="21" stroke="#a75d22" stroke-opacity=".35"/>
+        <circle cx="19" cy="19" r="3.4" fill="#4a2f1e"/>
+        <circle cx="30" cy="17" r="2.6" fill="#4a2f1e"/>
+        <circle cx="32" cy="28" r="3.2" fill="#4a2f1e"/>
+        <circle cx="21" cy="30" r="2.4" fill="#4a2f1e"/>
+        <circle cx="26" cy="24" r="1.8" fill="#c98b4a"/>
+      </svg>
+      <span>
+        <span class="brand__name">Humbi <b>cookies</b></span>
+        <span class="brand__sub">Пекарня · кофейня</span>
+      </span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#menu">Печенье</a>
+      <a href="#coffee">Кофе</a>
+      <a href="#delivery">Доставка</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <div class="header__side">
+      <a class="header__phone" href="tel:+79855952625">
+        <small>Заказ по телефону</small>
+        +7 (985) 595-26-25
+      </a>
+      <a class="btn btn--main btn--sm" href="#delivery">Заказать доставку</a>
+      <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="hero__blob hero__blob--one"></div>
+    <div class="hero__blob hero__blob--two"></div>
+    <div class="wrap hero__grid">
+      <div>
+        <span class="eyebrow"><i></i>Тверской бульвар, 27 ст6 · Москва</span>
+        <h1>Печенье, которое пахнет <span>домом</span></h1>
+        <p class="hero__lead">
+          Тонкая хрустящая корочка, тягучая карамель внутри и <strong>шоколад, который тает
+          в пальцах</strong>. Печём маленькими партиями каждые 60 минут — поэтому в коробке
+          всегда тёплое.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--main" href="#delivery">Заказать доставку</a>
+          <a class="btn btn--line" href="#menu">Выбрать печенье</a>
+        </div>
+        <div class="hero__facts">
+          <div><b>8</b><small>видов печенья</small></div>
+          <div><b>40 мин</b><small>доставка</small></div>
+          <div><b>8:00</b><small>открываемся</small></div>
+        </div>
+      </div>
+      <div class="plate">
+        <div class="plate__grid">
+          <div class="plate__cell">
+            <svg viewBox="0 0 200 200" fill="none" role="img" aria-label="Печенье с шоколадной крошкой">
+              <circle cx="100" cy="100" r="86" fill="#dfa661"/>
+              <circle cx="100" cy="100" r="86" fill="url(#g1)"/>
+              <circle cx="72" cy="74" r="11" fill="#482d1d"/>
+              <circle cx="128" cy="66" r="8.5" fill="#482d1d"/>
+              <circle cx="140" cy="112" r="10" fill="#482d1d"/>
+              <circle cx="86" cy="128" r="8" fill="#482d1d"/>
+              <circle cx="112" cy="146" r="9.5" fill="#482d1d"/>
+              <circle cx="104" cy="102" r="6" fill="#5a3a25"/>
+              <circle cx="60" cy="112" r="6.5" fill="#5a3a25"/>
+              <defs>
+                <radialGradient id="g1" cx=".35" cy=".3" r=".8">
+                  <stop offset="0" stop-color="#f0c088" stop-opacity=".9"/>
+                  <stop offset="1" stop-color="#c98b4a" stop-opacity=".55"/>
+                </radialGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="plate__cell">
+            <svg viewBox="0 0 160 160" fill="none" role="img" aria-label="Карамельное печенье">
+              <circle cx="80" cy="80" r="66" fill="#e8b26d"/>
+              <circle cx="80" cy="80" r="66" fill="url(#g2)"/>
+              <path d="M32 66c22-16 44 14 66-2s26-10 34 0" stroke="#a75d22" stroke-width="7" stroke-linecap="round"/>
+              <path d="M30 96c24-14 42 12 64-2s26-8 36 2" stroke="#a75d22" stroke-width="7" stroke-linecap="round" opacity=".75"/>
+              <path d="M44 122c18-10 32 6 50-4s20-4 26 2" stroke="#a75d22" stroke-width="6" stroke-linecap="round" opacity=".55"/>
+              <defs>
+                <radialGradient id="g2" cx=".35" cy=".3" r=".8">
+                  <stop offset="0" stop-color="#f7d3a3"/>
+                  <stop offset="1" stop-color="#d79a55" stop-opacity=".6"/>
+                </radialGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="plate__cell">
+            <svg viewBox="0 0 160 160" fill="none" role="img" aria-label="Овсяное печенье">
+              <circle cx="80" cy="80" r="66" fill="#e2c48f"/>
+              <circle cx="80" cy="80" r="66" fill="url(#g3)"/>
+              <g fill="#8f6b3f">
+                <ellipse cx="58" cy="62" rx="9" ry="5" transform="rotate(-18 58 62)"/>
+                <ellipse cx="104" cy="58" rx="8" ry="4.6" transform="rotate(24 104 58)"/>
+                <ellipse cx="116" cy="94" rx="9" ry="5" transform="rotate(-10 116 94)"/>
+                <ellipse cx="72" cy="102" rx="8" ry="4.4" transform="rotate(30 72 102)"/>
+                <ellipse cx="88" cy="126" rx="8" ry="4.6" transform="rotate(-22 88 126)"/>
+                <ellipse cx="42" cy="92" rx="7" ry="4" transform="rotate(12 42 92)"/>
+              </g>
+              <circle cx="92" cy="78" r="7" fill="#6f4a2c"/>
+              <defs>
+                <radialGradient id="g3" cx=".38" cy=".3" r=".8">
+                  <stop offset="0" stop-color="#f6e3bd"/>
+                  <stop offset="1" stop-color="#c8a468" stop-opacity=".65"/>
+                </radialGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="plate__cell plate__cell--promo">
+            <small>Коробка на 6</small>
+            <b>1 490 ₽</b>
+            <span>вместо 1 700 ₽</span>
+          </div>
+        </div>
+        <div class="plate__note">
+          <span class="plate__dot"></span>
+          <span><b>Партия № 214</b> — только что из печи, 11:40</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand" id="menu">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>Наше печенье</h2>
+        <p>Три вида, которые разбирают быстрее всего. Продаём поштучно и коробками по шесть — так выгоднее.</p>
+      </div>
+      <div class="cookies">
+        <article class="cookie reveal">
+          <span class="cookie__label">Хит</span>
+          <div class="cookie__art">
+            <svg viewBox="0 0 200 200" fill="none" aria-hidden="true">
+              <circle cx="100" cy="100" r="86" fill="#dfa661"/>
+              <circle cx="100" cy="100" r="86" fill="url(#c1)"/>
+              <circle cx="72" cy="74" r="11" fill="#482d1d"/>
+              <circle cx="128" cy="66" r="8.5" fill="#482d1d"/>
+              <circle cx="140" cy="112" r="10" fill="#482d1d"/>
+              <circle cx="86" cy="128" r="8" fill="#482d1d"/>
+              <circle cx="112" cy="146" r="9.5" fill="#482d1d"/>
+              <circle cx="104" cy="102" r="6" fill="#5a3a25"/>
+              <circle cx="60" cy="112" r="6.5" fill="#5a3a25"/>
+              <defs>
+                <radialGradient id="c1" cx=".35" cy=".3" r=".8">
+                  <stop offset="0" stop-color="#f0c088" stop-opacity=".9"/>
+                  <stop offset="1" stop-color="#c98b4a" stop-opacity=".55"/>
+                </radialGradient>
+              </defs>
+            </svg>
+          </div>
+          <h3>Шоколадная капля</h3>
+          <p>Бельгийский шоколад кусочками, немного морской соли и сливочное тесто на желтках.</p>
+          <div class="cookie__row">
+            <div class="cookie__price">290 ₽<small>/ шт</small></div>
+            <button class="cookie__add" type="button" data-name="Шоколадная капля" data-price="290">В корзину</button>
+          </div>
+        </article>
+        <article class="cookie reveal">
+          <span class="cookie__label">Новинка</span>
+          <div class="cookie__art">
+            <svg viewBox="0 0 160 160" fill="none" aria-hidden="true">
+              <circle cx="80" cy="80" r="66" fill="#e8b26d"/>
+              <circle cx="80" cy="80" r="66" fill="url(#c2)"/>
+              <path d="M32 66c22-16 44 14 66-2s26-10 34 0" stroke="#a75d22" stroke-width="7" stroke-linecap="round"/>
+              <path d="M30 96c24-14 42 12 64-2s26-8 36 2" stroke="#a75d22" stroke-width="7" stroke-linecap="round" opacity=".75"/>
+              <path d="M44 122c18-10 32 6 50-4s20-4 26 2" stroke="#a75d22" stroke-width="6" stroke-linecap="round" opacity=".55"/>
+              <defs>
+                <radialGradient id="c2" cx=".35" cy=".3" r=".8">
+                  <stop offset="0" stop-color="#f7d3a3"/>
+                  <stop offset="1" stop-color="#d79a55" stop-opacity=".6"/>
+                </radialGradient>
+              </defs>
+            </svg>
+          </div>
+          <h3>Двойная карамель</h3>
+          <p>Солёная карамель в тесте и тягучая карамельная стружка сверху. Липнет к пальцам — так и надо.</p>
+          <div class="cookie__row">
+            <div class="cookie__price">320 ₽<small>/ шт</small></div>
+            <button class="cookie__add" type="button" data-name="Двойная карамель" data-price="320">В корзину</button>
+          </div>
+        </article>
+        <article class="cookie reveal">
+          <span class="cookie__label">Классика</span>
+          <div class="cookie__art">
+            <svg viewBox="0 0 160 160" fill="none" aria-hidden="true">
+              <circle cx="80" cy="80" r="66" fill="#e2c48f"/>
+              <circle cx="80" cy="80" r="66" fill="url(#c3)"/>
+              <g fill="#8f6b3f">
+                <ellipse cx="58" cy="62" rx="9" ry="5" transform="rotate(-18 58 62)"/>
+                <ellipse cx="104" cy="58" rx="8" ry="4.6" transform="rotate(24 104 58)"/>
+                <ellipse cx="116" cy="94" rx="9" ry="5" transform="rotate(-10 116 94)"/>
+                <ellipse cx="72" cy="102" rx="8" ry="4.4" transform="rotate(30 72 102)"/>
+                <ellipse cx="88" cy="126" rx="8" ry="4.6" transform="rotate(-22 88 126)"/>
+                <ellipse cx="42" cy="92" rx="7" ry="4" transform="rotate(12 42 92)"/>
+              </g>
+              <circle cx="92" cy="78" r="7" fill="#6f4a2c"/>
+              <defs>
+                <radialGradient id="c3" cx=".38" cy=".3" r=".8">
+                  <stop offset="0" stop-color="#f6e3bd"/>
+                  <stop offset="1" stop-color="#c8a468" stop-opacity=".65"/>
+                </radialGradient>
+              </defs>
+            </svg>
+          </div>
+          <h3>Овсяное с орехом</h3>
+          <p>Овсяные хлопья, грецкий орех и корица. Самое «домашнее» из нашей витрины.</p>
+          <div class="cookie__row">
+            <div class="cookie__price">260 ₽<small>/ шт</small></div>
+            <button class="cookie__add" type="button" data-name="Овсяное с орехом" data-price="260">В корзину</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="coffee">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>Кофе к печенью</h2>
+        <p>Обжарка на Тверской, зерно меняем каждые две недели. Любой напиток сделаем с собой.</p>
+      </div>
+      <div class="coffee reveal">
+        <div class="coffee__row">
+          <span class="coffee__name">Флэт уайт</span>
+          <span class="coffee__desc">двойной эспрессо и молоко 3,5%</span>
+          <span class="coffee__dots"></span>
+          <span class="coffee__price">280 ₽</span>
+        </div>
+        <div class="coffee__row">
+          <span class="coffee__name">Капучино</span>
+          <span class="coffee__desc">плотная пенка, какао на выбор</span>
+          <span class="coffee__dots"></span>
+          <span class="coffee__price">250 ₽</span>
+        </div>
+        <div class="coffee__row">
+          <span class="coffee__name">Раф карамельный</span>
+          <span class="coffee__desc">сливки, карамель, щепотка соли</span>
+          <span class="coffee__dots"></span>
+          <span class="coffee__price">310 ₽</span>
+        </div>
+        <div class="coffee__row">
+          <span class="coffee__name">Фильтр V60</span>
+          <span class="coffee__desc">Эфиопия, ноты абрикоса и чая</span>
+          <span class="coffee__dots"></span>
+          <span class="coffee__price">260 ₽</span>
+        </div>
+        <div class="coffee__row">
+          <span class="coffee__name">Какао</span>
+          <span class="coffee__desc">тёмный шоколад, маршмеллоу</span>
+          <span class="coffee__dots"></span>
+          <span class="coffee__price">290 ₽</span>
+        </div>
+        <div class="coffee__row">
+          <span class="coffee__name">Чай в чайнике</span>
+          <span class="coffee__desc">облепиха-апельсин или чёрный с чабрецом</span>
+          <span class="coffee__dots"></span>
+          <span class="coffee__price">240 ₽</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand" id="delivery">
+    <div class="wrap">
+      <div class="delivery reveal">
+        <div class="delivery__left">
+          <h2>Заказать<br>доставку</h2>
+          <p>Собираем коробку вручную, кладём печенье на пергамент, чтобы не размякло в дороге.</p>
+          <div class="steps">
+            <div class="step">
+              <span class="step__num">1</span>
+              <p><b>Выберите печенье</b>Нажмите «В корзину» на карточке — сумма посчитается сама.</p>
+            </div>
+            <div class="step">
+              <span class="step__num">2</span>
+              <p><b>Оставьте телефон</b>Перезвоним за две минуты и подтвердим адрес.</p>
+            </div>
+            <div class="step">
+              <span class="step__num">3</span>
+              <p><b>Курьер приедет за 40 минут</b>По Тверскому району — бесплатно от 1 500 ₽.</p>
+            </div>
+          </div>
+        </div>
+        <div class="delivery__right">
+          <div class="field">
+            <label for="name">Имя</label>
+            <input id="name" type="text" placeholder="Как к вам обращаться" autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="phone">Телефон</label>
+            <input id="phone" type="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel">
+          </div>
+          <div class="field">
+            <label for="address">Адрес доставки</label>
+            <input id="address" type="text" placeholder="Улица, дом, квартира" autocomplete="street-address">
+          </div>
+          <div class="total">
+            <span>В корзине: <b id="cartCount">0</b> шт</span>
+            <b id="cartSum">0 ₽</b>
+          </div>
+          <button class="btn btn--main" id="orderBtn" type="button">Оформить заказ</button>
+          <p class="hint" id="orderHint">Демо-режим: заказ не уходит на сервер. Чтобы заказать по-настоящему, позвоните — <b>+7 (985) 595-26-25</b>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="reviews">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>Что говорят гости</h2>
+      </div>
+      <div class="reviews">
+        <article class="review reveal">
+          <div class="review__stars">★★★★★</div>
+          <p>«Беру коробку на работу каждую пятницу. Карамельное разбирают за минуту, овсяное остаётся мне».</p>
+          <b>Марина, офис на Тверской</b>
+        </article>
+        <article class="review reveal">
+          <div class="review__stars">★★★★★</div>
+          <p>«Пришли за кофе, ушли с шестью печеньями. Какао с маршмеллоу — отдельная любовь».</p>
+          <b>Илья и Даша</b>
+        </article>
+        <article class="review reveal">
+          <div class="review__stars">★★★★☆</div>
+          <p>«Доставка приехала за полчаса, печенье ещё тёплое. Жаль, шоколадную каплю часто разбирают к вечеру».</p>
+          <b>Сергей</b>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="contacts">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <a class="brand" href="#top" style="margin-bottom:16px">
+          <svg class="brand__mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <circle cx="24" cy="24" r="21" fill="#e9a95c"/>
+            <circle cx="19" cy="19" r="3.4" fill="#4a2f1e"/>
+            <circle cx="30" cy="17" r="2.6" fill="#4a2f1e"/>
+            <circle cx="32" cy="28" r="3.2" fill="#4a2f1e"/>
+            <circle cx="21" cy="30" r="2.4" fill="#4a2f1e"/>
+          </svg>
+          <span>
+            <span class="brand__name">Humbi <b>cookies</b></span>
+            <span class="brand__sub">Пекарня · кофейня</span>
+          </span>
+        </a>
+        <p style="margin-top:14px">Печём печенье с 2019 года. Маленькая пекарня<br>с большой печью.</p>
+      </div>
+      <div>
+        <h4>Адрес</h4>
+        <p>Тверской бульвар, 27 ст6</p>
+        <p>Москва, 123104</p>
+        <p>вход с бульвара</p>
+      </div>
+      <div>
+        <h4>Связь</h4>
+        <p><a href="tel:+79855952625">+7 (985) 595-26-25</a></p>
+        <p><a href="mailto:hello@humbicookies.ru">hello@humbicookies.ru</a></p>
+      </div>
+      <div>
+        <h4>Часы</h4>
+        <p>Пн — Пт 08:00 — 22:00</p>
+        <p>Сб — Вс 09:00 — 22:00</p>
+        <p>Печенье печём каждый час</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© <span id="year">2026</span> Humbi cookies. Демонстрационный проект.</span>
+      <span>Сделано на чистом HTML, CSS и JavaScript</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const revealAll = () => document.querySelectorAll('.reveal:not(.is-in)').forEach((el) => el.classList.add('is-in'));
+setTimeout(revealAll, 2400);
+window.addEventListener('beforeprint', revealAll);
+
+const header = document.getElementById('header');
+const onScroll = () => header.classList.toggle('is-stuck', window.scrollY > 12);
+onScroll();
+window.addEventListener('scroll', onScroll, { passive: true });
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-in');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.14, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reveal').forEach((el, index) => {
+  el.style.transitionDelay = `${Math.min(index % 3, 2) * 80}ms`;
+  io.observe(el);
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const burger = document.getElementById('burger');
+const nav = document.getElementById('nav');
+burger.addEventListener('click', () => {
+  const open = nav.classList.toggle('is-open');
+  burger.classList.toggle('is-open', open);
+  burger.setAttribute('aria-expanded', String(open));
+});
+nav.querySelectorAll('a').forEach((link) => {
+  link.addEventListener('click', () => {
+    nav.classList.remove('is-open');
+    burger.classList.remove('is-open');
+    burger.setAttribute('aria-expanded', 'false');
+  });
+});
+
+const cart = { count: 0, sum: 0 };
+const cartCount = document.getElementById('cartCount');
+const cartSum = document.getElementById('cartSum');
+const orderHint = document.getElementById('orderHint');
+const orderBtn = document.getElementById('orderBtn');
+
+const renderCart = () => {
+  cartCount.textContent = cart.count;
+  cartSum.textContent = `${cart.sum} ₽`;
+};
+
+document.querySelectorAll('.cookie__add').forEach((button) => {
+  button.addEventListener('click', () => {
+    cart.count += 1;
+    cart.sum += Number(button.dataset.price);
+    renderCart();
+    button.textContent = 'Добавлено';
+    setTimeout(() => { button.textContent = 'В корзину'; }, 1400);
+  });
+});
+
+const phoneInput = document.getElementById('phone');
+phoneInput.addEventListener('input', () => {
+  const digits = phoneInput.value.replace(/\D/g, '').slice(0, 11);
+  let out = '';
+  if (digits.length) out = '+7';
+  if (digits.length > 1) out += ` (${digits.slice(1, 4)}`;
+  if (digits.length >= 5) out += `) ${digits.slice(4, 7)}`;
+  if (digits.length >= 8) out += `-${digits.slice(7, 9)}`;
+  if (digits.length >= 10) out += `-${digits.slice(9, 11)}`;
+  phoneInput.value = out;
+});
+
+orderBtn.addEventListener('click', () => {
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const address = document.getElementById('address').value.trim();
+  if (cart.count === 0) {
+    orderHint.innerHTML = 'Корзина пуста — <b>добавьте печенье</b> на карточках выше.';
+    return;
+  }
+  if (name.length < 2 || phone.replace(/\D/g, '').length < 11 || address.length < 5) {
+    orderHint.innerHTML = 'Заполните имя, телефон и адрес — <b>иначе курьер не доедет</b>.';
+    return;
+  }
+  orderBtn.textContent = 'Заказ принят';
+  orderBtn.disabled = true;
+  orderBtn.style.opacity = '0.7';
+  orderHint.innerHTML = `${name}, заказ на ${cart.sum} ₽ собран. В демо-режиме он не уходит на сервер — для подтверждения позвоните: <b>+7 (985) 595-26-25</b>.`;
+});
+</script>
+</body>
+</html>
