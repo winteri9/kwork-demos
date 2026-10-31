@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Лисолесье — кофейня на Реутовской, 5</title>
+<meta name="description" content="Кофейня «Лисолесье»: обжарка на месте, выпечка каждое утро, тишина вместо музыки. Реутовская ул, 5.">
+<style>
+:root{
+  --bg:#12100e;
+  --bg-soft:#1a1512;
+  --card:#201916;
+  --card-hi:#2a211c;
+  --line:#392c24;
+  --text:#f3e8dc;
+  --muted:#b09a88;
+  --accent:#d9a066;
+  --accent-deep:#a9713f;
+  --shadow:0 30px 70px -30px rgba(0,0,0,.9);
+  --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Inter","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1160px,calc(100% - 48px));margin-inline:auto;position:relative;z-index:1}
+
+.header{
+  position:fixed;
+  inset:0 0 auto 0;
+  z-index:50;
+  transition:background .35s ease,border-color .35s ease,backdrop-filter .35s ease;
+  border-bottom:1px solid transparent;
+}
+.header.is-stuck{
+  background:rgba(18,16,14,.82);
+  backdrop-filter:blur(14px) saturate(140%);
+  border-bottom-color:var(--line);
+}
+.header__inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding:18px 0;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.brand__mark{width:38px;height:38px;flex:none;color:var(--accent)}
+.brand__name{
+  font-family:var(--serif);
+  font-size:26px;
+  letter-spacing:.04em;
+  line-height:1;
+}
+.brand__sub{
+  display:block;
+  font-family:var(--sans);
+  font-size:10px;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:6px;
+}
+.nav{display:flex;align-items:center;gap:30px}
+.nav a{
+  font-size:13px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+  position:relative;
+  padding:4px 0;
+  transition:color .25s ease;
+}
+.nav a::after{
+  content:"";
+  position:absolute;
+  left:0;bottom:0;
+  height:1px;width:0;
+  background:var(--accent);
+  transition:width .28s ease;
+}
+.nav a:hover{color:var(--text)}
+.nav a:hover::after{width:100%}
+.header__phone{
+  font-size:14px;
+  letter-spacing:.02em;
+  color:var(--text);
+  white-space:nowrap;
+}
+.header__phone span{color:var(--muted);font-size:11px;display:block;letter-spacing:.22em;text-transform:uppercase}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:15px 30px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  cursor:pointer;
+  border:1px solid transparent;
+  transition:transform .2s ease,background .25s ease,color .25s ease,border-color .25s ease,box-shadow .3s ease;
+}
+.btn--solid{background:linear-gradient(135deg,var(--accent),var(--accent-deep));color:#211609;box-shadow:0 14px 34px -16px rgba(217,160,102,.85)}
+.btn--solid:hover{transform:translateY(-2px);box-shadow:0 20px 42px -16px rgba(217,160,102,.95)}
+.btn--ghost{border-color:var(--line);color:var(--text)}
+.btn--ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+.hero{
+  position:relative;
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  padding:150px 0 90px;
+  overflow:hidden;
+}
+.hero__glow{
+  position:absolute;
+  width:900px;height:900px;
+  top:-380px;right:-260px;
+  background:radial-gradient(circle,rgba(217,160,102,.16),rgba(217,160,102,0) 66%);
+  pointer-events:none;
+}
+.hero__glow--two{
+  top:auto;right:auto;
+  bottom:-520px;left:-300px;
+  width:820px;height:820px;
+  background:radial-gradient(circle,rgba(169,113,63,.14),rgba(169,113,63,0) 68%);
+}
+.hero__ring{
+  position:absolute;
+  width:640px;height:640px;
+  border:1px solid rgba(217,160,102,.18);
+  border-radius:50%;
+  right:-120px;top:14%;
+  pointer-events:none;
+}
+.hero__ring::after{
+  content:"";
+  position:absolute;
+  inset:64px;
+  border:1px solid rgba(217,160,102,.1);
+  border-radius:50%;
+}
+.hero__grid{display:grid;grid-template-columns:1.15fr .85fr;gap:70px;align-items:center}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  font-size:11px;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:26px;
+}
+.eyebrow::before{
+  content:"";
+  width:44px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent));
+}
+h1{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:clamp(58px,9vw,118px);
+  line-height:.92;
+  letter-spacing:-.01em;
+}
+h1 em{font-style:italic;color:var(--accent)}
+.hero__lead{
+  max-width:44ch;
+  margin-top:28px;
+  font-size:17px;
+  color:var(--muted);
+}
+.hero__actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px}
+.hero__meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:34px;
+  margin-top:58px;
+  padding-top:30px;
+  border-top:1px solid var(--line);
+}
+.hero__meta dt{
+  font-size:10px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.hero__meta dd{font-size:15px;letter-spacing:.01em}
+
+.ticket{
+  background:linear-gradient(165deg,var(--card-hi),var(--card));
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:36px 34px;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+.ticket::before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto 0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(217,160,102,.6),transparent);
+}
+.ticket__cup{
+  width:104px;
+  height:104px;
+  margin:0 auto 22px;
+  border-radius:50%;
+  border:1px solid rgba(217,160,102,.35);
+  display:grid;
+  place-items:center;
+  color:var(--accent);
+  background:radial-gradient(circle,rgba(217,160,102,.14),transparent 70%);
+}
+.ticket__title{
+  font-family:var(--serif);
+  font-size:27px;
+  text-align:center;
+  letter-spacing:.01em;
+}
+.ticket__note{
+  text-align:center;
+  font-size:13px;
+  color:var(--muted);
+  margin-top:8px;
+}
+.ticket__hours{
+  margin-top:26px;
+  display:grid;
+  gap:2px;
+}
+.ticket__row{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  padding:11px 0;
+  border-bottom:1px dashed rgba(57,44,36,.9);
+  font-size:14px;
+}
+.ticket__row:last-child{border-bottom:0}
+.ticket__row span:first-child{color:var(--muted)}
+.ticket__addr{
+  margin-top:22px;
+  padding:14px 16px;
+  border-radius:12px;
+  background:rgba(217,160,102,.08);
+  border:1px solid rgba(217,160,102,.22);
+  font-size:14px;
+  text-align:center;
+  letter-spacing:.02em;
+}
+
+section{position:relative;z-index:1}
+.section{padding:112px 0}
+.section--soft{background:linear-gradient(180deg,transparent,rgba(26,21,18,.85) 18%,rgba(26,21,18,.85) 82%,transparent)}
+.section__head{max-width:620px;margin-bottom:54px}
+.section__head h2{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:clamp(38px,5vw,60px);
+  line-height:1.05;
+}
+.section__head p{margin-top:18px;color:var(--muted);font-size:16px}
+
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.menu__item{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:24px;
+  padding:30px 32px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:linear-gradient(160deg,rgba(42,33,28,.75),rgba(32,25,22,.9));
+  transition:transform .28s ease,border-color .28s ease,background .28s ease;
+}
+.menu__item:hover{transform:translateY(-4px);border-color:rgba(217,160,102,.5);background:linear-gradient(160deg,rgba(52,40,33,.9),rgba(32,25,22,.95))}
+.menu__tag{
+  display:inline-block;
+  font-size:10px;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:10px;
+}
+.menu__name{font-family:var(--serif);font-size:25px;line-height:1.15}
+.menu__desc{font-size:13.5px;color:var(--muted);margin-top:8px;max-width:34ch}
+.menu__price{
+  font-family:var(--serif);
+  font-size:24px;
+  white-space:nowrap;
+  color:var(--accent);
+  padding-top:4px;
+}
+
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.feature{
+  padding:34px 30px;
+  border-radius:18px;
+  border:1px solid var(--line);
+  background:rgba(32,25,22,.6);
+}
+.feature__num{
+  font-family:var(--serif);
+  font-size:13px;
+  letter-spacing:.3em;
+  color:var(--accent);
+}
+.feature h3{font-family:var(--serif);font-size:24px;font-weight:500;margin:14px 0 10px}
+.feature p{font-size:14px;color:var(--muted)}
+
+.booking{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:0;
+  border:1px solid var(--line);
+  border-radius:24px;
+  overflow:hidden;
+  background:linear-gradient(150deg,var(--card-hi),var(--bg-soft));
+  box-shadow:var(--shadow);
+}
+.booking__left{padding:58px 54px}
+.booking__left h2{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:clamp(34px,4.4vw,52px);
+  line-height:1.05;
+}
+.booking__left p{margin-top:18px;color:var(--muted);max-width:42ch}
+.booking__right{
+  padding:58px 46px;
+  background:rgba(18,16,14,.55);
+  border-left:1px solid var(--line);
+  display:grid;
+  align-content:center;
+  gap:16px;
+}
+.field{display:grid;gap:8px}
+.field label{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.field input,.field select{
+  width:100%;
+  padding:14px 16px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:rgba(18,16,14,.75);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:15px;
+  outline:none;
+  transition:border-color .2s ease;
+}
+.field input:focus,.field select:focus{border-color:var(--accent)}
+.booking__hint{font-size:12px;color:var(--muted);line-height:1.5}
+.booking__hint b{color:var(--accent);font-weight:600}
+
+.footer{border-top:1px solid var(--line);padding:52px 0 40px;margin-top:20px}
+.footer__grid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.footer__col h4{
+  font-size:10px;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:14px;
+}
+.footer__col p,.footer__col a{font-size:14px;line-height:1.9;color:var(--text)}
+.footer__col a:hover{color:var(--accent)}
+.footer__bottom{
+  margin-top:38px;
+  padding-top:22px;
+  border-top:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.reveal.is-in{opacity:1;transform:none}
+@media print{.reveal{opacity:1 !important;transform:none !important}}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+.burger{
+  display:none;
+  width:44px;height:44px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:transparent;
+  cursor:pointer;
+  padding:12px;
+}
+.burger span{display:block;height:1px;background:var(--text);margin:5px 0;transition:transform .25s ease,opacity .25s ease}
+
+@media (max-width:980px){
+  .hero__grid{grid-template-columns:1fr;gap:48px}
+  .hero{min-height:auto;padding:132px 0 80px}
+  .hero__ring{display:none}
+  .menu{grid-template-columns:1fr}
+  .features{grid-template-columns:1fr}
+  .booking{grid-template-columns:1fr}
+  .booking__right{border-left:0;border-top:1px solid var(--line)}
+  .nav{display:none}
+  .header__phone{display:none}
+  .burger{display:block}
+  .section{padding:84px 0}
+}
+@media (max-width:620px){
+  .wrap{width:calc(100% - 32px)}
+  .booking__left{padding:40px 26px}
+  .booking__right{padding:34px 26px}
+  .menu__item{padding:24px 22px}
+  .hero__meta{gap:24px}
+  .btn{width:100%}
+  .hero__actions{gap:10px}
+}
+</style>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="wrap header__inner">
+    <a class="brand" href="#top">
+      <svg class="brand__mark" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="24" cy="24" r="18"/>
+        <path d="M24 13c5.5 3.6 8.5 8.2 8.5 12.4a8.5 8.5 0 0 1-17 0c0-4.2 3-8.8 8.5-12.4Z"/>
+        <path d="M24 20v12"/>
+      </svg>
+      <span>
+        <span class="brand__name">Лисолесье</span>
+        <span class="brand__sub">Coffee &amp; bakery</span>
+      </span>
+    </a>
+    <nav class="nav">
+      <a href="#menu">Меню</a>
+      <a href="#atmosphere">Атмосфера</a>
+      <a href="#booking">Бронь</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a class="header__phone" href="tel:+79152848876">
+      <span>Забронировать</span>
+      +7 (915) 284-88-76
+    </a>
+    <button class="burger" id="burger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero__glow"></div>
+    <div class="hero__glow hero__glow--two"></div>
+    <div class="hero__ring"></div>
+    <div class="wrap hero__grid">
+      <div>
+        <span class="eyebrow">Реутовская, 5 · Москва</span>
+        <h1>Лисо<br><em>лесье</em></h1>
+        <p class="hero__lead">
+          Кофейня на первом этаже жилого дома: своя обжарка, выпечка с шести утра
+          и окна во двор, где осенью действительно шумит листва.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--solid" href="#booking">Забронировать столик</a>
+          <a class="btn btn--ghost" href="#menu">Смотреть меню</a>
+        </div>
+        <dl class="hero__meta">
+          <div>
+            <dt>Адрес</dt>
+            <dd>Реутовская ул, 5</dd>
+          </div>
+          <div>
+            <dt>Часы</dt>
+            <dd>08:00 — 21:00</dd>
+          </div>
+          <div>
+            <dt>Посадка</dt>
+            <dd>28 мест</dd>
+          </div>
+        </dl>
+      </div>
+      <aside class="ticket">
+        <div class="ticket__cup">
+          <svg width="52" height="52" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 18h24v11a10 10 0 0 1-10 10h-4a10 10 0 0 1-10-10V18Z"/>
+            <path d="M34 20h3a5 5 0 0 1 0 10h-3"/>
+            <path d="M17 12c0-2 2-2 2-4M24 12c0-2 2-2 2-4M31 12c0-2 2-2 2-4"/>
+          </svg>
+        </div>
+        <p class="ticket__title">Утро начинается здесь</p>
+        <p class="ticket__note">Свежая обжарка по вторникам</p>
+        <div class="ticket__hours">
+          <div class="ticket__row"><span>Понедельник — пятница</span><span>08:00 — 21:00</span></div>
+          <div class="ticket__row"><span>Суббота</span><span>09:00 — 22:00</span></div>
+          <div class="ticket__row"><span>Воскресенье</span><span>09:00 — 20:00</span></div>
+        </div>
+        <div class="ticket__addr">Реутовская ул, 5 · вход со двора</div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--soft" id="menu">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Меню</span>
+        <h2>Четыре вещи,<br>за которыми возвращаются</h2>
+        <p>Короткая карта вместо длинного списка: два напитка и два десерта, которые мы оттачиваем каждый день.</p>
+      </div>
+      <div class="menu">
+        <article class="menu__item reveal">
+          <div>
+            <span class="menu__tag">Кофе</span>
+            <h3 class="menu__name">Раф «Лесной»</h3>
+            <p class="menu__desc">Эспрессо, сливки 11%, кедровый сироп и щепотка соли на пенке.</p>
+          </div>
+          <div class="menu__price">320 ₽</div>
+        </article>
+        <article class="menu__item reveal">
+          <div>
+            <span class="menu__tag">Кофе</span>
+            <h3 class="menu__name">Фильтр V60</h3>
+            <p class="menu__desc">Эфиопия светлой обжарки: абрикос, чёрный чай, долгое послевкусие.</p>
+          </div>
+          <div class="menu__price">290 ₽</div>
+        </article>
+        <article class="menu__item reveal">
+          <div>
+            <span class="menu__tag">Десерт</span>
+            <h3 class="menu__name">Медовик с облепихой</h3>
+            <p class="menu__desc">Восемь тонких коржей, крем на сметане, кислый облепиховый курд.</p>
+          </div>
+          <div class="menu__price">390 ₽</div>
+        </article>
+        <article class="menu__item reveal">
+          <div>
+            <span class="menu__tag">Десерт</span>
+            <h3 class="menu__name">Тарт с грушей</h3>
+            <p class="menu__desc">Песочная основа, конфи из груши, тимьян и солёная карамель.</p>
+          </div>
+          <div class="menu__price">360 ₽</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="atmosphere">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Атмосфера</span>
+        <h2>Тише, чем в городе</h2>
+      </div>
+      <div class="features">
+        <article class="feature reveal">
+          <span class="feature__num">01</span>
+          <h3>Своя обжарка</h3>
+          <p>Обжариваем по 6 кг дважды в неделю. Зерно лежит не дольше трёх недель — поэтому в чашке ягода, а не горечь.</p>
+        </article>
+        <article class="feature reveal">
+          <span class="feature__num">02</span>
+          <h3>Печём сами</h3>
+          <p>Медовик и тарты выходят из печи к открытию. К вечеру остаётся ровно столько, сколько нужно, чтобы не выбрасывать.</p>
+        </article>
+        <article class="feature reveal">
+          <span class="feature__num">03</span>
+          <h3>Без спешки</h3>
+          <p>Розетки у каждого стола, вода без ограничений, музыка тише разговора. Можно работать, читать и просто сидеть.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="booking">
+    <div class="wrap">
+      <div class="booking reveal">
+        <div class="booking__left">
+          <span class="eyebrow">Бронирование</span>
+          <h2>Забронировать<br>столик</h2>
+          <p>Онлайн-бронь пока в разработке — оставьте заявку, и мы перезвоним в течение десяти минут. Или позвоните сами: так быстрее.</p>
+          <div class="hero__actions" style="margin-top:30px">
+            <a class="btn btn--solid" href="tel:+79152848876">+7 (915) 284-88-76</a>
+          </div>
+        </div>
+        <div class="booking__right">
+          <div class="field">
+            <label for="name">Имя</label>
+            <input id="name" type="text" placeholder="Как к вам обращаться">
+          </div>
+          <div class="field">
+            <label for="phone">Телефон</label>
+            <input id="phone" type="tel" placeholder="+7 (___) ___-__-__">
+          </div>
+          <div class="field">
+            <label for="guests">Гостей</label>
+            <select id="guests">
+              <option>1 гость</option>
+              <option selected>2 гостя</option>
+              <option>3 гостя</option>
+              <option>4 гостя</option>
+              <option>больше четырёх</option>
+            </select>
+          </div>
+          <button class="btn btn--solid" id="bookingBtn" type="button">Отправить заявку</button>
+          <p class="booking__hint" id="bookingHint">Демо-режим: заявка не уходит на сервер. <b>Позвоните</b> — забронируем сразу.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="contacts">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div class="footer__col">
+        <h4>Кофейня</h4>
+        <p>Лисолесье</p>
+        <p>Реутовская ул, 5</p>
+        <p>Москва</p>
+      </div>
+      <div class="footer__col">
+        <h4>Связь</h4>
+        <p><a href="tel:+79152848876">+7 (915) 284-88-76</a></p>
+        <p><a href="mailto:hello@lisolesye.ru">hello@lisolesye.ru</a></p>
+      </div>
+      <div class="footer__col">
+        <h4>Часы</h4>
+        <p>Пн — Пт 08:00 — 21:00</p>
+        <p>Сб 09:00 — 22:00</p>
+        <p>Вс 09:00 — 20:00</p>
+      </div>
+      <div class="footer__col">
+        <h4>Навигация</h4>
+        <p><a href="#menu">Меню</a></p>
+        <p><a href="#atmosphere">Атмосфера</a></p>
+        <p><a href="#booking">Бронь</a></p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© <span id="year">2026</span> Лисолесье. Демонстрационный проект.</span>
+      <span>Сделано на чистом HTML, CSS и JavaScript</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const revealAll = () => document.querySelectorAll('.reveal:not(.is-in)').forEach((el) => el.classList.add('is-in'));
+setTimeout(revealAll, 2600);
+window.addEventListener('beforeprint', revealAll);
+const header = document.getElementById('header');
+const onScroll = () => header.classList.toggle('is-stuck', window.scrollY > 24);
+onScroll();
+window.addEventListener('scroll', onScroll, { passive: true });
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-in');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.16, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.reveal').forEach((el, index) => {
+  el.style.transitionDelay = `${Math.min(index % 4, 3) * 90}ms`;
+  io.observe(el);
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const phoneInput = document.getElementById('phone');
+phoneInput.addEventListener('input', () => {
+  const digits = phoneInput.value.replace(/\D/g, '').slice(0, 11);
+  let out = '';
+  if (digits.length) out = '+7';
+  if (digits.length > 1) out += ` (${digits.slice(1, 4)}`;
+  if (digits.length >= 5) out += `) ${digits.slice(4, 7)}`;
+  if (digits.length >= 8) out += `-${digits.slice(7, 9)}`;
+  if (digits.length >= 10) out += `-${digits.slice(9, 11)}`;
+  phoneInput.value = out;
+});
+
+const bookingBtn = document.getElementById('bookingBtn');
+const bookingHint = document.getElementById('bookingHint');
+bookingBtn.addEventListener('click', () => {
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const guests = document.getElementById('guests').value;
+  if (name.length < 2 || phone.replace(/\D/g, '').length < 11) {
+    bookingHint.innerHTML = 'Заполните имя и телефон — <b>иначе мы не перезвоним</b>.';
+    return;
+  }
+  bookingBtn.textContent = 'Заявка принята';
+  bookingBtn.disabled = true;
+  bookingBtn.style.opacity = '0.75';
+  bookingHint.innerHTML = `${name}, ждём вас. ${guests} — заявка сохранена в демо-режиме, для подтверждения позвоните: <b>+7 (915) 284-88-76</b>.`;
+});
+
+const burger = document.getElementById('burger');
+const nav = document.querySelector('.nav');
+burger.addEventListener('click', () => {
+  const open = nav.classList.toggle('is-open');
+  nav.style.display = open ? 'flex' : '';
+  nav.style.position = open ? 'absolute' : '';
+  nav.style.top = open ? '100%' : '';
+  nav.style.right = open ? '0' : '';
+  nav.style.flexDirection = open ? 'column' : '';
+  nav.style.gap = open ? '4px' : '';
+  nav.style.background = open ? 'rgba(18,16,14,.97)' : '';
+  nav.style.borderBottom = open ? '1px solid #392c24' : '';
+  nav.style.padding = open ? '18px 24px 24px' : '';
+  nav.style.borderRadius = open ? '0 0 18px 18px' : '';
+});
+</script>
+</body>
+</html>
